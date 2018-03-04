@@ -9,6 +9,7 @@ import com.stewsters.sand.game.math.Vec3
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TerminalBuilder
+import org.codetome.zircon.api.input.InputType
 import org.codetome.zircon.api.input.KeyStroke
 import org.codetome.zircon.api.input.MouseAction
 import org.codetome.zircon.api.input.MouseActionType
@@ -54,15 +55,21 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
 
     override fun keyPressed(keycode: KeyStroke) {
-        when (keycode.getCharacter()) {
-            's' -> focus += Vec3[0, -1, 0]
-            'w' -> focus += Vec3[0, 1, 0]
-            'a' -> focus += Vec3[-1, 0, 0]
-            'd' -> focus += Vec3[1, 0, 0]
-            'q' -> focus += Vec3[0, 0, -1]
-            'e' -> focus += Vec3[0, 0, 1]
-            'p' -> save()
-            'l' -> load()
+        when (keycode.getInputType()) {
+            InputType.Escape -> {
+                game.activity = MenuActivity(game)
+            }
+            InputType.Character -> when (keycode.getCharacter()) {
+                's' -> focus += Vec3[0, -1, 0]
+                'w' -> focus += Vec3[0, 1, 0]
+                'a' -> focus += Vec3[-1, 0, 0]
+                'd' -> focus += Vec3[1, 0, 0]
+                'q' -> focus += Vec3[0, 0, -1]
+                'e' -> focus += Vec3[0, 0, 1]
+                'p' -> save()
+                'l' -> load()
+            }
+
         }
 
     }
@@ -225,6 +232,5 @@ class CreateMapActivity(var game: SandGame) : Activity {
         }
 
     }
-
 
 }

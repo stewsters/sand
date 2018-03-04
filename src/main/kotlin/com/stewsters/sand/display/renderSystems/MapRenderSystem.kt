@@ -4,9 +4,12 @@ import com.stewsters.sand.display.Appearance
 import com.stewsters.sand.game.map.World
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
+import org.codetome.zircon.api.builder.TextCharacterBuilder
+import org.codetome.zircon.api.color.TextColor
+import org.codetome.zircon.api.color.TextColorFactory
 import org.codetome.zircon.api.screen.Screen
 
-class MapRenderSystem(val region: World) {
+class MapRenderSystem {
 
 
     fun process(world: World, screen: Screen) {
@@ -31,75 +34,39 @@ class MapRenderSystem(val region: World) {
                     if (world.outside(worldX, worldY, worldZ))
                         break
 
+                    tint = 1.0 / (down + 1.0)
                     val pawn = world.pawnAt(worldX, worldY, tz)
 
                     if (pawn != null) {
-                        // TODO: show that they are 'down' units
                         textCharacter = pawn.appearance
-                        tint = 1.0 / (tz + 1.0)
                         break;
                     }
 
-                    val appearance = world.getCellTypeAt(worldX, worldY, worldZ).appearance
+                    val appearance = world.getCellTypeAt(worldX, worldY, tz).appearance
                     if (appearance != null) {
                         textCharacter = appearance
-                        tint = 1.0 / (tz + 1.0)
                         break;
                     }
                 }
-                screen.setCharacterAt(Position.of(x, ySize - y - 1), textCharacter)
+
+                val tintedForeGround = darken(textCharacter.getForegroundColor(), tint)
+                val tintedBackGround = darken(textCharacter.getBackgroundColor(), tint)
+
+                screen.setCharacterAt(Position.of(x, ySize - y - 1), TextCharacterBuilder.newBuilder()
+                        .character(textCharacter.getCharacter())
+                        .foregroundColor(tintedForeGround)
+                        .backgroundColor(tintedBackGround).build())
             }
         }
-//
-//
-//        var point = region.player.pos.current
-//
-//        val zLevel = point.z
-//
-//
-//        //TODO: use getWidth and calculate how many tiles are visible
-//
-//        val lowX = Math.max(point.x - 15, 0)
-//        val highX = Math.min(point.x + 15, region.getXSize())
-//
-//        val lowY = Math.max(point.y - 15, 0)
-//        val highY = Math.min(point.y + 15, region.getYSize())
-//
-//
-//        for (x in lowX until highX) {
-//            for (y in lowY until highY) {
-//
-//
-//                var zDown = 0
-//                for (zD in 0..9) {
-//
-//                    val tz = zLevel - zD
-//                    if (tz < 0) {
-//                        break
-//                    }
-//
-//                    zDown = zD
-//                    val tileType = region.getCellTypeAt(x, y, tz)
-//                    if (tileType.appearance != null) {
-//                        val tint = 1f / (zD + 1f)
-////                        spriteBatch.setColor(tint, tint, tint, 1f)
-////                        spriteBatch.draw(tileType.texture, x.toFloat(), y.toFloat(), 1f, 1f)
-//                        break
-//                    }
-//                }
-//
-//                // now draw sprite from bottom to top
-//                for (zMod in zDown downTo 0) {
-//                    val pawn = region.pawnAt(x, y, zLevel - zMod)
-//                    if (pawn != null) {
-//                        val tint = 1f / (zMod + 1f)
-////                        spriteBatch.setColor(tint, tint, tint, 1f)
-////                        spriteBatch.draw(pawn.appearance, pawn.pos.getRenderedX(), pawn.pos.getRenderedY(), 1f, 1f)
-//                    }
-//                }
-//
-//            }
-//        }
     }
+
+    // This is not ideal, it creates a lot of garbage
+    fun darken(textColor: TextColor, tint: Double): TextColor =
+            TextColorFactory.fromRGB(
+                    (textColor.getRed().toDouble() * tint).toInt(),
+                    (textColor.getGreen().toDouble() * tint).toInt(),
+                    (textColor.getBlue().toDouble() * tint).toInt()
+            )
+
 
 }

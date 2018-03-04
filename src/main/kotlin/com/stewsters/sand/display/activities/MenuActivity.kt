@@ -73,19 +73,7 @@ class MenuActivity(var game: SandGame) : Activity {
     }
 
     override fun render() {
-
-//        screen.setCharacterAt(Position(1, 1), '@')
-//
-//         (0 until screen.getBoundableSize().rows).forEach { y->
-//            (0 until screen.getBoundableSize().columns).forEach { x->
-//                screen.setCharacterAt(Position.of(x,y), TileType.FLOOR.appearance!!)
-//            }
-//        }
-//        screen.setCharacterAt(Position(2, 3),
-//        )
-
         screen.display()
-
     }
 
 }

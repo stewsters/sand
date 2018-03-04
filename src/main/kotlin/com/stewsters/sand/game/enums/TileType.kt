@@ -12,7 +12,9 @@ enum class TileType(val material: Material, val floor: Boolean, val wall: Boolea
             .character('*')
             .backgroundColor(Appearance.purple)
             .build()),
+
     AIR(Material.AIR, false, false),
+
     FLOOR(Material.STONE, true, false, TextCharacterBuilder.newBuilder()
             .character('.')
             .build()),
@@ -23,7 +25,7 @@ enum class TileType(val material: Material, val floor: Boolean, val wall: Boolea
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
             .build()),
 
-    SAND_FLOOR(Material.SAND,  true,false,TextCharacterBuilder.newBuilder()
+    SAND_FLOOR(Material.SAND, true, false, TextCharacterBuilder.newBuilder()
             .character(',')
             .foregroundColor(TextColorFactory.fromString("#EDC9AF"))
             .backgroundColor(TextColorFactory.fromString("#C2B280"))

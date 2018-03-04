@@ -30,7 +30,6 @@ class SandGame(val terminal: Terminal, var activity: Activity? = null) {
         activity?.render()
     }
 
-
 }
 
 

@@ -4,7 +4,7 @@ enum class Material(val blocks: Boolean) {
 
     // Game Types
     AIR(false),
-//    SNOW(true),
+    //    SNOW(true),
     STONE(true),
     SAND(true),
     WOOD(true),

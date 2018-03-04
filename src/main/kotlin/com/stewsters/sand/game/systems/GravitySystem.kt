@@ -24,8 +24,8 @@ class GravitySystem(val worldMap: World) {
                 next = pawn.pos.down()
             }
 
-            if (fall >= 2) {
-                pawn.health.damage(fall - 1)
+            if (fall > 3) {
+                pawn.health.damage(fall - 3)
                 if (pawn.health.cur <= 0) {
                     toDelete.add(pawn)
                 }
@@ -33,6 +33,7 @@ class GravitySystem(val worldMap: World) {
 
         }
         for (pawn in toDelete) {
+            println("Removed ${pawn.name}")
             worldMap.removePawn(pawn)
         }
     }

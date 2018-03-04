@@ -9,6 +9,7 @@ import com.stewsters.sand.game.math.Matrix3d
 import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Pawn
+import java.io.File
 
 
 object RuinGen {
@@ -59,14 +60,65 @@ object RuinGen {
         }
 
         // load in directory of rooms
+        val mapChunkList = File("chunks").listFiles()
+                .filter { it.name.endsWith(".cnk") }
+                .map { file ->
+                    val (metadata, mapData) = file.readText().split('\n')
 
-        // convert into a list of rooms
+                    val dimensions = metadata.split(" ").map { it.toInt() }
+                    val xSize = dimensions[0]
+                    val ySize = dimensions[1]
+                    val zSize = dimensions[2]
+
+                    val map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
+                        Tile(TileType.UNFINISHED)
+                    })
+
+                    mapData.toCharArray()
+                            .map { TileType.values().get(it.toInt() - 65) }
+                            .forEachIndexed { i, tile ->
+                                val x = i % xSize
+                                val y = (i % (xSize * ySize)) / xSize
+                                val z = i / (xSize * ySize)
+                                map[x, y, z].type = tile
+                            }
+                    map
+                }
+
 
         // loop through, sliding the rooms to the center. Probably start with the bottom
+
 
         // A* to maintain connectivity.  Will need to account for climbing, ideally we want it to be necessary to find
         // All the treasure
 
+
+        // Any unknown should become sand
+        (0 until maxSize.z).forEach { z ->
+            (0 until maxSize.y).forEach { y ->
+                (0 until maxSize.x).forEach { x ->
+                    val tileType = worldMap.getCellTypeAt(x, y, z)
+
+                    if (tileType == TileType.UNFINISHED) {
+                        worldMap.setCellTypeAt(x, y, z, TileType.WALL)
+
+                    }
+                }
+            }
+        }
+
+
+        (0 until maxSize.z).forEach { z ->
+            (0 until maxSize.y).forEach { y ->
+                (0 until maxSize.x).forEach { x ->
+                    val tileType = worldMap.getCellTypeAt(x, y, z)
+
+                    if (tileType == TileType.AIR && worldMap.getCellTypeAt(x, y, z - 1).wall) {
+                        worldMap.setCellTypeAt(x, y, z, TileType.FLOOR)
+                    }
+                }
+            }
+        }
 
         return worldMap
     }
