@@ -6,7 +6,12 @@ import org.codetome.zircon.api.builder.TextCharacterBuilder
 import org.codetome.zircon.api.color.TextColorFactory
 
 
-enum class TileType(val material: Material, val floor: Boolean, val wall: Boolean, val appearance: TextCharacter? = null) {
+enum class TileType(
+        val material: Material,
+        val floor: Boolean,
+        val wall: Boolean,
+        val appearance: TextCharacter? = null,
+        val isGrippable: Boolean=false) {
 
     UNFINISHED(Material.AIR, false, false, TextCharacterBuilder.newBuilder()
             .character('*')
@@ -23,13 +28,16 @@ enum class TileType(val material: Material, val floor: Boolean, val wall: Boolea
             .character('#')
             .foregroundColor(TextColorFactory.fromString("#F0E68C"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
-            .build()),
+            .build(),
+            true),
 
     SAND_FLOOR(Material.SAND, true, false, TextCharacterBuilder.newBuilder()
             .character(',')
             .foregroundColor(TextColorFactory.fromString("#EDC9AF"))
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
-            .build())
+            .build());
+
+
 
 
     // sarcophagus_sealed

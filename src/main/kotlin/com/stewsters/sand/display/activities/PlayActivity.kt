@@ -2,6 +2,8 @@ package com.stewsters.sand.display.activities
 
 import com.stewsters.sand.SandGame
 import com.stewsters.sand.display.renderSystems.MapRenderSystem
+import com.stewsters.sand.game.actions.ClimbAction
+import com.stewsters.sand.game.actions.DescendAction
 import com.stewsters.sand.game.actions.WalkAction
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.Facing
@@ -26,7 +28,7 @@ class PlayActivity(var game: SandGame) : Activity {
         world = RuinGen.gen()
 
         //set up systems
-        mapRenderSystem = MapRenderSystem(world)
+        mapRenderSystem = MapRenderSystem()
         turnProcessSystem = TurnProcessSystem(world)
 
         screen = TerminalBuilder.createScreenFor(game.terminal)
@@ -44,6 +46,9 @@ class PlayActivity(var game: SandGame) : Activity {
             'a' -> WalkAction(Facing.LEFT)
             's' -> WalkAction(Facing.DOWN)
             'd' -> WalkAction(Facing.RIGHT)
+
+            'e' -> ClimbAction()
+            'q' -> DescendAction()
             else -> null
         }
 

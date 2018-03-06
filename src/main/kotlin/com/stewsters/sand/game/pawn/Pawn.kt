@@ -1,6 +1,8 @@
 package com.stewsters.sand.game.pawn
 
 import com.stewsters.sand.game.actions.Action
+import com.stewsters.sand.game.map.World
+import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.math.Vec3
 import org.codetome.zircon.api.TextCharacter
 
@@ -11,7 +13,8 @@ class Pawn(
         val health: Health,
         var gameTurn: Long,
         var aiControl: AiControl? = null,
-        var nextAction: Action? = null
+        var nextAction: Action? = null,
+        var facing: Facing? = Facing.UP
 //        ,
 //        var playerControl: PlayerControl? = null
 
@@ -32,6 +35,24 @@ class Pawn(
             return aiControl?.getNextAction()
         }
         return null
+    }
+
+    fun canCatch(worldMap: World): Boolean {
+
+
+        for (point in pos.vonNeumanNeighborhood2d()) {
+            if (worldMap.getCellTypeAt(point).isGrippable)
+                return true
+        }
+
+        // if we are on a rope, then we are caught
+
+        // if we have a ledge above us, then we can catch onto the edge
+
+        // if are between 2 walls, we could do stemming
+
+        return false
+
     }
 
 }
