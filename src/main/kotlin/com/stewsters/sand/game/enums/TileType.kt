@@ -35,7 +35,15 @@ enum class TileType(
             .character(',')
             .foregroundColor(TextColorFactory.fromString("#EDC9AF"))
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
-            .build());
+            .build()),
+
+    SAND_WALL(Material.SAND, true,true,TextCharacterBuilder.newBuilder()
+            .character('~')
+            .foregroundColor(TextColorFactory.fromString("#e0E080"))
+            .backgroundColor(TextColorFactory.fromString("#BDB76B"))
+            .build()
+
+    )
 
 
     // sarcophagus_sealed

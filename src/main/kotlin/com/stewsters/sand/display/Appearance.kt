@@ -10,6 +10,7 @@ class Appearance {
         var white = TextColorFactory.fromString("#ffffff")
         var black = TextColorFactory.fromString("#000000")
         val purple = TextColorFactory.fromString("#9932CC")
+        val green = TextColorFactory.fromString("#11ff11")
 
         var player = TextCharacterBuilder.newBuilder()
                 .character('@')
@@ -20,6 +21,12 @@ class Appearance {
         var mummy = TextCharacterBuilder.newBuilder()
                 .character('M')
                 .foregroundColor(white)
+                .backgroundColor(black)
+                .build()
+
+        var nopeRope = TextCharacterBuilder.newBuilder()
+                .character('~')
+                .foregroundColor(green)
                 .backgroundColor(black)
                 .build()
 

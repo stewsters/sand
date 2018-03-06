@@ -10,7 +10,7 @@ import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Pawn
 import java.io.File
-
+import java.util.*
 
 object RuinGen {
 
@@ -23,6 +23,7 @@ object RuinGen {
     val maxSize = Vec3[maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z]
     fun gen(): World {
 
+        val r = Random()
 
         val worldMap = World(
                 player = Pawn(
@@ -44,7 +45,7 @@ object RuinGen {
 
         (0 until maxSize.x).forEach { x ->
             (0 until maxSize.y).forEach { y ->
-                worldMap.setCellTypeAt(x, y, 0, TileType.FLOOR)
+                //                worldMap.setCellTypeAt(x, y, 0, TileType.FLOOR)
                 worldMap.setCellTypeAt(x, y, maxSize.z - 1, TileType.AIR)
                 worldMap.setCellTypeAt(x, y, maxSize.z - 2, TileType.SAND_FLOOR)
             }
@@ -88,6 +89,28 @@ object RuinGen {
 
         // loop through, sliding the rooms to the center. Probably start with the bottom
 
+        val placedRoomCenters = mutableListOf<Vec3>()
+
+        (0 until maxSize.z - 2).forEach { z ->
+            (0..50).forEach {
+
+                val room = mapChunkList[r.nextInt(mapChunkList.size)]
+                // todo: arbitrary rotation and reflection
+
+                var placement = Vec3[
+                        r.nextInt(worldMap.getXSize() - room.xSize),
+                        r.nextInt(worldMap.getYSize() - room.ySize),
+                        z]
+
+
+                if (attemptPlacement(worldMap, room, placement)) {
+                    placedRoomCenters.add(placement)
+                }
+
+                println(placedRoomCenters)
+
+            }
+        }
 
         // A* to maintain connectivity.  Will need to account for climbing, ideally we want it to be necessary to find
         // All the treasure
@@ -100,7 +123,7 @@ object RuinGen {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.UNFINISHED) {
-                        worldMap.setCellTypeAt(x, y, z, TileType.WALL)
+                        worldMap.setCellTypeAt(x, y, z, TileType.SAND_WALL)
 
                     }
                 }
@@ -108,6 +131,7 @@ object RuinGen {
         }
 
 
+        // exposed wall should be floor
         (0 until maxSize.z).forEach { z ->
             (0 until maxSize.y).forEach { y ->
                 (0 until maxSize.x).forEach { x ->
@@ -121,6 +145,27 @@ object RuinGen {
         }
 
         return worldMap
+    }
+
+    private fun attemptPlacement(worldMap: World, room: Matrix3d<Tile>, placement: Vec3): Boolean {
+        for (zMod in (0 until room.zSize)) {
+            for (yMod in (0 until room.ySize)) {
+                for (xMod in (0 until room.xSize)) {
+                    if (worldMap.getCellTypeAt(placement.x + xMod, placement.y + yMod, placement.z + zMod) != TileType.UNFINISHED) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        for (zMod in (0 until room.zSize)) {
+            for (yMod in (0 until room.ySize)) {
+                for (xMod in (0 until room.xSize)) {
+                    worldMap.setCellTypeAt(placement.x + xMod, placement.y + yMod, placement.z + zMod, room[xMod, yMod, zMod].type)
+                }
+            }
+        }
+        return true
     }
 
 
