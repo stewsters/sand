@@ -27,8 +27,8 @@ class ClimbAction : Action() {
 
             val above = pawn.pos.up()
             val mantlePoint = above + pawn.facing!!
-            if(!world.getCellTypeAt(above).floor && world.getCellTypeAt(mantlePoint).floor){
-                world.movePawn(pawn,mantlePoint)
+            if (!world.getCellTypeAt(above).floor && world.getCellTypeAt(mantlePoint).floor) {
+                world.movePawn(pawn, mantlePoint)
                 return ActionResult.SUCCESS
             }
 

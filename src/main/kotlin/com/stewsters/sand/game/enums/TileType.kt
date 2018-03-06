@@ -11,7 +11,7 @@ enum class TileType(
         val floor: Boolean,
         val wall: Boolean,
         val appearance: TextCharacter? = null,
-        val isGrippable: Boolean=false) {
+        val isGrippable: Boolean = false) {
 
     UNFINISHED(Material.AIR, false, false, TextCharacterBuilder.newBuilder()
             .character('*')
@@ -36,8 +36,6 @@ enum class TileType(
             .foregroundColor(TextColorFactory.fromString("#EDC9AF"))
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
             .build());
-
-
 
 
     // sarcophagus_sealed

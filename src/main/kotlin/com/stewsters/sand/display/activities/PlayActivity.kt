@@ -1,6 +1,7 @@
 package com.stewsters.sand.display.activities
 
 import com.stewsters.sand.SandGame
+import com.stewsters.sand.display.renderSystems.HudRenderSystem
 import com.stewsters.sand.display.renderSystems.MapRenderSystem
 import com.stewsters.sand.game.actions.ClimbAction
 import com.stewsters.sand.game.actions.DescendAction
@@ -20,8 +21,10 @@ class PlayActivity(var game: SandGame) : Activity {
 
     var mapRenderSystem: MapRenderSystem
     var turnProcessSystem: TurnProcessSystem
-    //    var hudRenderSystem: HudRenderSystem
+    var hudRenderSystem: HudRenderSystem
+
     private var screen: Screen
+//    private var panel:Panel
 
     init {
 
@@ -29,10 +32,10 @@ class PlayActivity(var game: SandGame) : Activity {
 
         //set up systems
         mapRenderSystem = MapRenderSystem()
+        hudRenderSystem = HudRenderSystem()
         turnProcessSystem = TurnProcessSystem(world)
 
         screen = TerminalBuilder.createScreenFor(game.terminal)
-//        hudRenderSystem = HudRenderSystem(world, hudCamera, spriteBatch, TextureManager.bitmapFont)
 
     }
 
@@ -68,10 +71,8 @@ class PlayActivity(var game: SandGame) : Activity {
     override fun render() {
 
         mapRenderSystem.process(world, screen)
-
+        hudRenderSystem.processSystem(world, screen)
         screen.display()
-
-        //todo: hudRenderSystem.processSystem()
 
     }
 

@@ -24,14 +24,13 @@ class GravitySystem(val worldMap: World) {
                     break
                 }
 
-                if(pawn.canCatch(worldMap)){
+                if (pawn.canCatch(worldMap)) {
                     println("Caught edge")
-                    if(!worldMap.getCellTypeAt( pawn.pos+ pawn.facing!!).isGrippable){
+                    if (!worldMap.getCellTypeAt(pawn.pos + pawn.facing!!).isGrippable) {
                         for (facing in Facing.values()) {
-                            if (worldMap.getCellTypeAt(pawn.pos+facing).isGrippable)
-                            {
+                            if (worldMap.getCellTypeAt(pawn.pos + facing).isGrippable) {
                                 println("facing changed to $facing")
-                                pawn.facing=facing
+                                pawn.facing = facing
                                 break
                             }
                         }
@@ -49,7 +48,7 @@ class GravitySystem(val worldMap: World) {
 
             if (fall > 3) {
                 pawn.health.damage(fall - 3)
-                println ("You fell ${fall * 8} feet.")
+                println("You fell ${fall * 8} feet.")
                 if (pawn.health.cur <= 0) {
                     toDelete.add(pawn)
                 }

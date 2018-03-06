@@ -14,7 +14,6 @@ class MapRenderSystem {
 
     fun process(world: World, screen: Screen) {
 
-
         val playerPos = world.player.pos
 
         val xSize = screen.getBoundableSize().columns
