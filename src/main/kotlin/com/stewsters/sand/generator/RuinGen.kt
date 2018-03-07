@@ -7,6 +7,7 @@ import com.stewsters.sand.game.map.Tile
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.Matrix3d
 import com.stewsters.sand.game.math.Vec3
+import com.stewsters.sand.game.math.pathfinder.findPath3d
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Pawn
 import java.io.File
@@ -17,7 +18,7 @@ object RuinGen {
 //    val groundHeight = 2
 //    val start = Vec3[10, 10, groundHeight]
 
-    val maxChunks = Vec3[4, 4, 4]
+    val maxChunks = Vec3[4, 4, 2]
     val chunkSize = Vec3[32, 32, 32]
 
     val maxSize = Vec3[maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z]
@@ -90,6 +91,7 @@ object RuinGen {
         // loop through, sliding the rooms to the center. Probably start with the bottom
 
         val placedRoomCenters = mutableListOf<Vec3>()
+        placedRoomCenters.add(Vec3[maxSize.x / 2, maxSize.y / 2, maxSize.z - 6])
 
         (0 until maxSize.z - 2).forEach { z ->
             (0..50).forEach {
@@ -104,10 +106,11 @@ object RuinGen {
 
 
                 if (attemptPlacement(worldMap, room, placement)) {
-                    placedRoomCenters.add(placement)
+                    placedRoomCenters.add(Vec3[placement.x + room.xSize / 2, placement.y + room.ySize / 2, placement.z])
                 }
 
                 println(placedRoomCenters)
+
 
             }
         }
@@ -115,6 +118,30 @@ object RuinGen {
         // A* to maintain connectivity.  Will need to account for climbing, ideally we want it to be necessary to find
         // All the treasure
 
+        for (i in 0 until placedRoomCenters.size - 1) {
+            val curRoom = placedRoomCenters[i]
+            val nextRoom = placedRoomCenters[i + 1]
+
+            val path = findPath3d(maxSize,
+                    { worldMap.getCellTypeAt(it).cost },
+                    { it.vonNeumanNeighborhood2d().filter { worldMap.contains(it) } },
+                    curRoom,
+                    nextRoom)
+
+            if (path != null) {
+                println("Success $curRoom $nextRoom")
+                path.forEach {
+                    val type = worldMap.getCellTypeAt(it)
+                    if (type == TileType.UNFINISHED || type.wall) {
+                        worldMap.setCellTypeAt(it, TileType.FLOOR)
+                    }
+                }
+
+            } else {
+                println("Failed $curRoom $nextRoom")
+            }
+
+        }
 
         // Any unknown should become sand
         (0 until maxSize.z).forEach { z ->
@@ -123,8 +150,7 @@ object RuinGen {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.UNFINISHED) {
-                        worldMap.setCellTypeAt(x, y, z, TileType.SAND_WALL)
-
+                        worldMap.setCellTypeAt(x, y, z, TileType.WALL)
                     }
                 }
             }

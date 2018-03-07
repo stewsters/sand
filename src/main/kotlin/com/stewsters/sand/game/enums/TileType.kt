@@ -10,40 +10,43 @@ enum class TileType(
         val material: Material,
         val floor: Boolean,
         val wall: Boolean,
+        val cost: Double,
         val appearance: TextCharacter? = null,
         val isGrippable: Boolean = false) {
 
-    UNFINISHED(Material.AIR, false, false, TextCharacterBuilder.newBuilder()
+    UNFINISHED(Material.AIR, false, false, 0.5, TextCharacterBuilder.newBuilder()
             .character('*')
             .backgroundColor(Appearance.purple)
             .build()),
 
-    AIR(Material.AIR, false, false),
+    AIR(Material.AIR, false, false, 3.0),
 
-    FLOOR(Material.STONE, true, false, TextCharacterBuilder.newBuilder()
+    FLOOR(Material.STONE, true, false, 0.25, TextCharacterBuilder.newBuilder()
             .character('.')
             .build()),
 
-    WALL(Material.STONE, true, true, TextCharacterBuilder.newBuilder()
+    WALL(Material.STONE, true, true, 4.0, TextCharacterBuilder.newBuilder()
             .character('#')
             .foregroundColor(TextColorFactory.fromString("#F0E68C"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
             .build(),
             true),
 
-    SAND_FLOOR(Material.SAND, true, false, TextCharacterBuilder.newBuilder()
+    SAND_FLOOR(Material.SAND, true, false, 0.25, TextCharacterBuilder.newBuilder()
             .character(',')
             .foregroundColor(TextColorFactory.fromString("#EDC9AF"))
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
             .build()),
 
-    SAND_WALL(Material.SAND, true,true,TextCharacterBuilder.newBuilder()
+    SAND_WALL(Material.SAND, true,true,3.0, TextCharacterBuilder.newBuilder()
             .character('~')
             .foregroundColor(TextColorFactory.fromString("#e0E080"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
             .build()
 
-    )
+    );
+
+
 
 
     // sarcophagus_sealed

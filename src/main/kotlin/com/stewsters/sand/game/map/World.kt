@@ -35,6 +35,7 @@ class World(
         return map[chunk(x), chunk(y), chunk(z)].tiles[tile(x), tile(y), tile(z)].type
     }
 
+    fun setCellTypeAt(p: Vec3, type: TileType) = setCellTypeAt(p.x, p.y, p.z, type)
     fun setCellTypeAt(x: Int, y: Int, z: Int, type: TileType) {
         map[chunk(x), chunk(y), chunk(z)].tiles[tile(x), tile(y), tile(z)].type = type
     }
@@ -76,5 +77,7 @@ class World(
                 || y < 0 || y >= getYSize()
                 || z < 0 || z >= getZSize()
     }
+
+    fun contains(pos: Vec3): Boolean = !outside(pos)
 
 }
