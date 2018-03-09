@@ -1,6 +1,8 @@
 package com.stewsters.sand.display.renderSystems
 
 import com.stewsters.sand.display.Appearance
+import com.stewsters.sand.game.light.Bresenham3d
+import com.stewsters.sand.game.light.LosEvaluator
 import com.stewsters.sand.game.map.World
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
@@ -14,6 +16,7 @@ class MapRenderSystem {
 
     fun process(world: World, screen: Screen) {
 
+        var los = LosEvaluator(world);
         val playerPos = world.player.pos
 
         val xSize = screen.getBoundableSize().columns
@@ -25,36 +28,42 @@ class MapRenderSystem {
                 val worldY = y - ySize / 2 + playerPos.y
                 val worldZ = playerPos.z
 
-                var textCharacter: TextCharacter = Appearance.darkness
-                var tint = 1.0
-                for (down in 0 until 4) {
+                if (Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los)) {
 
-                    val tz = worldZ - down
-                    if (world.outside(worldX, worldY, worldZ))
-                        break
 
-                    tint = 1.0 / (down + 1.0)
-                    val pawn = world.pawnAt(worldX, worldY, tz)
+                    var textCharacter: TextCharacter = Appearance.darkness
+                    var tint = 1.0
+                    for (down in 0 until 4) {
 
-                    if (pawn != null) {
-                        textCharacter = pawn.appearance
-                        break;
+                        val tz = worldZ - down
+                        if (world.outside(worldX, worldY, worldZ))
+                            break
+
+                        tint = 1.0 / (down + 1.0)
+                        val pawn = world.pawnAt(worldX, worldY, tz)
+
+                        if (pawn != null) {
+                            textCharacter = pawn.appearance
+                            break;
+                        }
+
+                        val appearance = world.getCellTypeAt(worldX, worldY, tz).appearance
+                        if (appearance != null) {
+                            textCharacter = appearance
+                            break;
+                        }
                     }
 
-                    val appearance = world.getCellTypeAt(worldX, worldY, tz).appearance
-                    if (appearance != null) {
-                        textCharacter = appearance
-                        break;
-                    }
+                    val tintedForeGround = darken(textCharacter.getForegroundColor(), tint)
+                    val tintedBackGround = darken(textCharacter.getBackgroundColor(), tint)
+
+                    screen.setCharacterAt(Position.of(x, ySize - y - 1), TextCharacterBuilder.newBuilder()
+                            .character(textCharacter.getCharacter())
+                            .foregroundColor(tintedForeGround)
+                            .backgroundColor(tintedBackGround).build())
+                } else {
+                    screen.setCharacterAt(Position.of(x, ySize - y - 1), Appearance.darkness)
                 }
-
-                val tintedForeGround = darken(textCharacter.getForegroundColor(), tint)
-                val tintedBackGround = darken(textCharacter.getBackgroundColor(), tint)
-
-                screen.setCharacterAt(Position.of(x, ySize - y - 1), TextCharacterBuilder.newBuilder()
-                        .character(textCharacter.getCharacter())
-                        .foregroundColor(tintedForeGround)
-                        .backgroundColor(tintedBackGround).build())
             }
         }
     }

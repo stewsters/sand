@@ -35,7 +35,7 @@ object RuinGen {
                         health = Health(100, 100),
                         appearance = Appearance.player,
                         gameTurn = 0,
-                        inventory = Inventory(4,6)
+                        inventory = Inventory(4, 6)
                 ),
                 map = Matrix3d(maxChunks, { x, y, z ->
                     Chunk(

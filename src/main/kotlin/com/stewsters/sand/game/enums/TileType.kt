@@ -38,7 +38,7 @@ enum class TileType(
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
             .build()),
 
-    SAND_WALL(Material.SAND, true,true,3.0, TextCharacterBuilder.newBuilder()
+    SAND_WALL(Material.SAND, true, true, 3.0, TextCharacterBuilder.newBuilder()
             .character('~')
             .foregroundColor(TextColorFactory.fromString("#e0E080"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
@@ -46,9 +46,9 @@ enum class TileType(
 
     ),
 
-    ROPE(Material.AIR,false, false, 1.0,TextCharacterBuilder.newBuilder()
+    ROPE(Material.AIR, false, false, 1.0, TextCharacterBuilder.newBuilder()
             .character('*')
-            .build() )
+            .build())
 
     // sarcophagus_sealed
     // sarcophagus_open

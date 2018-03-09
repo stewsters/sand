@@ -6,9 +6,7 @@ import org.codetome.zircon.api.screen.Screen
 class HudRenderSystem() {
 
 
-
     fun processSystem(gameMap: World, screen: Screen) {
-
 
 
     }

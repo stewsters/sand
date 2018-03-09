@@ -27,7 +27,7 @@ class ClimbAction : Action() {
         if (nextPos.vonNeumanNeighborhood2d().none { world.getCellTypeAt(it).isGrippable }) {
 
             val above = pawn.pos.up()
-            if(world.getCellTypeAt(above) == TileType.ROPE) {
+            if (world.getCellTypeAt(above) == TileType.ROPE) {
                 world.movePawn(pawn, above)
                 return ActionResult.SUCCESS
             }

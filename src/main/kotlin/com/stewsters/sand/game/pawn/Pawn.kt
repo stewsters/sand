@@ -43,7 +43,7 @@ class Pawn(
     fun canCatch(worldMap: World): Boolean {
 
         // if we are on a rope, then we are caught
-        if(worldMap.getCellTypeAt(pos) == TileType.ROPE){
+        if (worldMap.getCellTypeAt(pos) == TileType.ROPE) {
             return true
         }
 
