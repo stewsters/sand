@@ -44,10 +44,11 @@ enum class TileType(
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
             .build()
 
-    );
+    ),
 
-
-
+    ROPE(Material.AIR,false, false, 1.0,TextCharacterBuilder.newBuilder()
+            .character('*')
+            .build() )
 
     // sarcophagus_sealed
     // sarcophagus_open

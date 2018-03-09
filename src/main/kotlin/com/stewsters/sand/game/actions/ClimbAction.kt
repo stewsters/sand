@@ -1,5 +1,6 @@
 package com.stewsters.sand.game.actions
 
+import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.pawn.Pawn
 
@@ -26,6 +27,11 @@ class ClimbAction : Action() {
         if (nextPos.vonNeumanNeighborhood2d().none { world.getCellTypeAt(it).isGrippable }) {
 
             val above = pawn.pos.up()
+            if(world.getCellTypeAt(above) == TileType.ROPE) {
+                world.movePawn(pawn, above)
+                return ActionResult.SUCCESS
+            }
+
             val mantlePoint = above + pawn.facing!!
             if (!world.getCellTypeAt(above).floor && world.getCellTypeAt(mantlePoint).floor) {
                 world.movePawn(pawn, mantlePoint)

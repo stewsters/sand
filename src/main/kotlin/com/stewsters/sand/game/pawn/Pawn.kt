@@ -1,6 +1,7 @@
 package com.stewsters.sand.game.pawn
 
 import com.stewsters.sand.game.actions.Action
+import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.math.Vec3
@@ -14,7 +15,9 @@ class Pawn(
         var gameTurn: Long,
         var aiControl: AiControl? = null,
         var nextAction: Action? = null,
-        var facing: Facing? = Facing.UP
+        var facing: Facing? = Facing.UP,
+        var inventory: Inventory? = null,
+        var lightProducer: LightProducer? = null
 //        ,
 //        var playerControl: PlayerControl? = null
 
@@ -39,13 +42,15 @@ class Pawn(
 
     fun canCatch(worldMap: World): Boolean {
 
+        // if we are on a rope, then we are caught
+        if(worldMap.getCellTypeAt(pos) == TileType.ROPE){
+            return true
+        }
 
         for (point in pos.vonNeumanNeighborhood2d()) {
             if (worldMap.getCellTypeAt(point).isGrippable)
                 return true
         }
-
-        // if we are on a rope, then we are caught
 
         // if we have a ledge above us, then we can catch onto the edge
 

@@ -10,6 +10,7 @@ import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.math.getManhattanDistance
 import com.stewsters.sand.game.math.pathfinder.findPath3d
 import com.stewsters.sand.game.pawn.Health
+import com.stewsters.sand.game.pawn.Inventory
 import com.stewsters.sand.game.pawn.Pawn
 import java.io.File
 import java.util.*
@@ -19,7 +20,7 @@ object RuinGen {
 //    val groundHeight = 2
 //    val start = Vec3[10, 10, groundHeight]
 
-    val maxChunks = Vec3[4, 4, 2]
+    val maxChunks = Vec3[2, 2, 2]
     val chunkSize = Vec3[32, 32, 32]
 
     val maxSize = Vec3[maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z]
@@ -33,7 +34,8 @@ object RuinGen {
                         pos = Vec3[maxSize.x / 2, maxSize.y / 2 - 10, maxSize.z - 2],
                         health = Health(100, 100),
                         appearance = Appearance.player,
-                        gameTurn = 0
+                        gameTurn = 0,
+                        inventory = Inventory(4,6)
                 ),
                 map = Matrix3d(maxChunks, { x, y, z ->
                     Chunk(
