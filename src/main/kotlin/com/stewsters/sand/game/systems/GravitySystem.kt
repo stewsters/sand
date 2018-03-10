@@ -7,7 +7,7 @@ import java.util.*
 
 class GravitySystem(val worldMap: World) {
 
-    fun processSystem() {
+    fun process() {
         val toDelete = ArrayList<Pawn>()
 
         for (pawn in worldMap.pawnQueue) {

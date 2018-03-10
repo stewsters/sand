@@ -33,7 +33,7 @@ class MapRenderSystem {
                 if (
                         playerPos.z >= world.getZSize() - 2 || //above the ground
                         dist < 2 ||
-                        (dist < world.player.lightProducer?.radius ?: 2 &&
+                        (world.getLight(worldX, worldY, worldZ) > 0 &&
                                 Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los))
                 ) {
 

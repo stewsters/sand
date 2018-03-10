@@ -6,6 +6,7 @@ import com.stewsters.sand.display.renderSystems.MapRenderSystem
 import com.stewsters.sand.game.actions.*
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.Facing
+import com.stewsters.sand.game.systems.LightSystem
 import com.stewsters.sand.game.systems.TurnProcessSystem
 import com.stewsters.sand.generator.RuinGen
 import org.codetome.zircon.api.builder.TerminalBuilder
@@ -17,8 +18,9 @@ class PlayActivity(var game: SandGame) : Activity {
 
     var world: World
 
-    var mapRenderSystem: MapRenderSystem
     var turnProcessSystem: TurnProcessSystem
+    var lightSystem:LightSystem
+    var mapRenderSystem: MapRenderSystem
     var hudRenderSystem: HudRenderSystem
 
     private var screen: Screen
@@ -29,9 +31,12 @@ class PlayActivity(var game: SandGame) : Activity {
         world = RuinGen.gen()
 
         //set up systems
+        turnProcessSystem = TurnProcessSystem(world)
+        lightSystem = LightSystem()
+
         mapRenderSystem = MapRenderSystem()
         hudRenderSystem = HudRenderSystem()
-        turnProcessSystem = TurnProcessSystem(world)
+
 
         screen = TerminalBuilder.createScreenFor(game.terminal)
 
@@ -61,6 +66,7 @@ class PlayActivity(var game: SandGame) : Activity {
         world.player.nextAction = action
 
         turnProcessSystem.process()
+        lightSystem.process(world)
 
         if (world.player.health.cur <= 0) {
             println("Switch to Lose Activity")

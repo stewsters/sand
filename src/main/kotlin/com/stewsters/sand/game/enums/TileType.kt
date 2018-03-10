@@ -3,6 +3,7 @@ package com.stewsters.sand.game.enums
 import com.stewsters.sand.display.Appearance
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TextCharacterBuilder
+import org.codetome.zircon.api.color.TextColor
 import org.codetome.zircon.api.color.TextColorFactory
 
 
@@ -23,6 +24,8 @@ enum class TileType(
 
     FLOOR(Material.STONE, true, false, 0.25, TextCharacterBuilder.newBuilder()
             .character('.')
+            .foregroundColor(TextColorFactory.fromString("#dddddd"))
+            .backgroundColor(TextColorFactory.fromString("#999999"))
             .build()),
 
     WALL(Material.STONE, true, true, 5.0, TextCharacterBuilder.newBuilder()

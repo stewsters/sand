@@ -12,9 +12,16 @@ class World(
         val map: Matrix3d<Chunk>,
         val pawnQueue: PriorityQueue<Pawn> = PriorityQueue<Pawn>()) {
 
+    val light: Matrix3d<Int>
+    val lightUpdate: Matrix3d<Int>
+    var lightTurn: Int = 0
+
     init {
 //        pawnQueue.add(player)
         addPawn(player)
+
+        light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
+        lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
     }
 
     private fun tile(globalCoord: Int): Int {
@@ -80,4 +87,23 @@ class World(
 
     fun contains(pos: Vec3): Boolean = !outside(pos)
 
+
+    fun lightTurn() {
+        lightTurn++
+    }
+
+    fun putLight(x: Int, y: Int, z: Int, amount: Int) {
+        if(outside(x,y,z))
+            return
+
+        light[x, y, z] = amount
+        lightUpdate[x, y, z] = lightTurn
+    }
+
+    fun getLight(x: Int, y: Int, z: Int): Int {
+        if (lightUpdate[x, y, z] == lightTurn)
+            return light[x, y, z]
+        else
+            return 0
+    }
 }

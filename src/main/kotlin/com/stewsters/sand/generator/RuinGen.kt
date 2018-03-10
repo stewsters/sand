@@ -109,8 +109,8 @@ object RuinGen {
                         z]
 
                 var shift = Vec3[
-                        r.nextInt(5) - 2,
-                        r.nextInt(5) - 2,
+                        r.nextInt(7) - 3,
+                        r.nextInt(7) - 3,
                         0
                 ]
                 if (shift != Vec3[0, 0, 0]) {

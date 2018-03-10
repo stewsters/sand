@@ -16,8 +16,7 @@ class TurnProcessSystem(val worldMap: World, val gravitySystem: GravitySystem = 
             var action = currentPawn.getAction()
 
             if (action == null) {
-                gravitySystem.processSystem()
-//                snipeSystem.processSystem()
+                gravitySystem.process()
                 return  // Looks like the player needs to choose what to do
             }
 
