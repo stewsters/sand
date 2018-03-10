@@ -14,7 +14,7 @@ enum class TileType(
         val appearance: TextCharacter? = null,
         val isGrippable: Boolean = false) {
 
-    UNFINISHED(Material.AIR, false, false, 0.5, TextCharacterBuilder.newBuilder()
+    UNFINISHED(Material.AIR, false, false, 1.0, TextCharacterBuilder.newBuilder()
             .character('*')
             .backgroundColor(Appearance.purple)
             .build()),
@@ -25,7 +25,7 @@ enum class TileType(
             .character('.')
             .build()),
 
-    WALL(Material.STONE, true, true, 4.0, TextCharacterBuilder.newBuilder()
+    WALL(Material.STONE, true, true, 5.0, TextCharacterBuilder.newBuilder()
             .character('#')
             .foregroundColor(TextColorFactory.fromString("#F0E68C"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))
@@ -38,7 +38,7 @@ enum class TileType(
             .backgroundColor(TextColorFactory.fromString("#C2B280"))
             .build()),
 
-    SAND_WALL(Material.SAND, true, true, 3.0, TextCharacterBuilder.newBuilder()
+    SAND_WALL(Material.SAND, true, true, 4.0, TextCharacterBuilder.newBuilder()
             .character('~')
             .foregroundColor(TextColorFactory.fromString("#e0E080"))
             .backgroundColor(TextColorFactory.fromString("#BDB76B"))

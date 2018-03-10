@@ -64,7 +64,7 @@ object RuinGen {
             }
         }
 
-        println("Loading Chunks")
+        println("Loading Rooms")
         // load in directory of rooms
         val mapChunkList = File("chunks").listFiles()
                 .filter { it.name.endsWith(".cnk") }

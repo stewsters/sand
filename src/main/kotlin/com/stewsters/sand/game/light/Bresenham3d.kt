@@ -49,6 +49,8 @@ object Bresenham3d {
             err_2 = dz2 - l
             i = 0
             while (i < l) {
+                if (point[0] == x2 && point[1] == y2 && point[2] == z2)
+                    return false
                 if (!evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2]))
                     return false
 
@@ -73,6 +75,8 @@ object Bresenham3d {
             err_2 = dz2 - m
             i = 0
             while (i < m) {
+                if (point[0] == x2 && point[1] == y2 && point[2] == z2)
+                    return false
                 if (!evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2]))
                     return false
 
@@ -98,6 +102,8 @@ object Bresenham3d {
             err_2 = dx2 - n
             i = 0
             while (i < n) {
+                if (point[0] == x2 && point[1] == y2 && point[2] == z2)
+                    return false
                 if (!evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2]))
                     return false
 
@@ -118,7 +124,8 @@ object Bresenham3d {
                 i++
             }
         }
-        return evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2])
+
+        return (point[0] == x2 && point[1] == y2 && point[2] == z2) || evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2])
     }
 
     fun getArray(x1: Int, y1: Int, z1: Int, x2: Int, y2: Int, z2: Int): ArrayList<Vec3> {

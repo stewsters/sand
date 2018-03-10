@@ -4,6 +4,7 @@ import com.stewsters.sand.display.Appearance
 import com.stewsters.sand.game.light.Bresenham3d
 import com.stewsters.sand.game.light.LosEvaluator
 import com.stewsters.sand.game.map.World
+import com.stewsters.sand.game.math.getEuclideanDistance
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TextCharacterBuilder
@@ -27,8 +28,14 @@ class MapRenderSystem {
                 val worldX = x - xSize / 2 + playerPos.x
                 val worldY = y - ySize / 2 + playerPos.y
                 val worldZ = playerPos.z
+                val dist = getEuclideanDistance(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ)
 
-                if (Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los)) {
+                if (
+                        playerPos.z >= world.getZSize() - 2 || //above the ground
+                        dist < 2 ||
+                        (dist < world.player.lightProducer?.radius ?: 2 &&
+                                Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los))
+                ) {
 
 
                     var textCharacter: TextCharacter = Appearance.darkness

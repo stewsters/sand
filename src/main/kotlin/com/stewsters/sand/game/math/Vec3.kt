@@ -83,4 +83,5 @@ fun getChebyshevDistance(x1: Int, y1: Int, z1: Int, x2: Int, y2: Int, z2: Int): 
 
 
 fun getEuclideanDistance(pos1: Vec3, pos2: Vec3): Double = getEuclideanDistance(pos1.x.toDouble(), pos1.y.toDouble(), pos1.z.toDouble(), pos2.x.toDouble(), pos2.y.toDouble(), pos2.z.toDouble())
+fun getEuclideanDistance(x1: Int, y1: Int, z1: Int, x2: Int, y2: Int, z2: Int): Double = getEuclideanDistance(x1.toDouble(), y1.toDouble(), z1.toDouble(), x2.toDouble(), y2.toDouble(), z2.toDouble())
 fun getEuclideanDistance(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double): Double = Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0) + Math.pow(z1 - z2, 2.0))
