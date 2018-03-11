@@ -11,8 +11,8 @@ class Pawn(
         var name: String,
         var pos: Vec3,
         val appearance: TextCharacter,
-        val health: Health,
-        var gameTurn: Long,
+        val health: Health? = null,
+        var turnTaker: TurnTaker? = null,
         var aiControl: AiControl? = null,
         var nextAction: Action? = null,
         var facing: Facing? = Facing.UP,
@@ -23,7 +23,7 @@ class Pawn(
 
 ) : Comparable<Pawn> {
 
-    override fun compareTo(other: Pawn): Int = gameTurn.compareTo(other.gameTurn)
+    override fun compareTo(other: Pawn): Int = turnTaker?.gameTurn?.compareTo(other.turnTaker?.gameTurn ?: 0) ?: 0
 
 
     fun getAction(): Action? {
@@ -61,3 +61,5 @@ class Pawn(
     }
 
 }
+
+data class TurnTaker(var gameTurn: Long)

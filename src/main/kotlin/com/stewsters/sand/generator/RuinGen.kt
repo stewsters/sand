@@ -12,6 +12,7 @@ import com.stewsters.sand.game.math.pathfinder.findPath3d
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Inventory
 import com.stewsters.sand.game.pawn.Pawn
+import com.stewsters.sand.game.pawn.TurnTaker
 import java.io.File
 import java.util.*
 
@@ -34,7 +35,7 @@ object RuinGen {
                         pos = Vec3[maxSize.x / 2, maxSize.y / 2 - 10, maxSize.z - 2],
                         health = Health(100, 100),
                         appearance = Appearance.player,
-                        gameTurn = 0,
+                        turnTaker = TurnTaker(gameTurn = 0),
                         inventory = Inventory(4, 6)
                 ),
                 map = Matrix3d(maxChunks, { x, y, z ->

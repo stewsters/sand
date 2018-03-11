@@ -9,19 +9,25 @@ import java.util.*
 
 class World(
         val player: Pawn,
-        val map: Matrix3d<Chunk>,
-        val pawnQueue: PriorityQueue<Pawn> = PriorityQueue<Pawn>()) {
+        val map: Matrix3d<Chunk>) {
 
     val light: Matrix3d<Int>
     val lightUpdate: Matrix3d<Int>
     var lightTurn: Int = 0
 
+    // for ones who can do something
+    val pawnQueue: PriorityQueue<Pawn>
+    val pawnList: MutableList<Pawn>
+
     init {
-//        pawnQueue.add(player)
-        addPawn(player)
+        pawnQueue = PriorityQueue()
+        pawnList = mutableListOf()
 
         light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
         lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
+
+        addPawn(player)
+
     }
 
     private fun tile(globalCoord: Int): Int {
@@ -53,7 +59,9 @@ class World(
     }
 
     fun addPawn(pawn: Pawn) {
-        pawnQueue.add(pawn)
+        pawnList.add(pawn)
+        if (pawn.turnTaker != null)
+            pawnQueue.add(pawn)
         val x = pawn.pos.x
         val y = pawn.pos.y
         val z = pawn.pos.z
@@ -62,6 +70,7 @@ class World(
     }
 
     fun removePawn(pawn: Pawn) {
+        pawnList.remove(pawn)
         pawnQueue.remove(pawn)
 
         val x = pawn.pos.x
@@ -93,7 +102,7 @@ class World(
     }
 
     fun putLight(x: Int, y: Int, z: Int, amount: Int) {
-        if(outside(x,y,z))
+        if (outside(x, y, z))
             return
 
         light[x, y, z] = amount

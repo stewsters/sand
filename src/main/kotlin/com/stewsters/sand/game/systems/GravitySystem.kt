@@ -10,7 +10,7 @@ class GravitySystem(val worldMap: World) {
     fun process() {
         val toDelete = ArrayList<Pawn>()
 
-        for (pawn in worldMap.pawnQueue) {
+        for (pawn in worldMap.pawnList) {
 
             var fall = 0
 
@@ -46,10 +46,10 @@ class GravitySystem(val worldMap: World) {
                 next = pawn.pos.down()
             }
 
-            if (fall > 3) {
+            if (fall > 3 && pawn.health != null) {
                 pawn.health.damage(fall - 3)
                 println("You fell ${fall * 8} feet.")
-                if (pawn.health.cur <= 0) {
+                if (pawn.health?.cur ?: 0 <= 0) {
                     toDelete.add(pawn)
                 }
             }

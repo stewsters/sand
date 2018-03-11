@@ -3,7 +3,6 @@ package com.stewsters.sand.game.enums
 import com.stewsters.sand.display.Appearance
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TextCharacterBuilder
-import org.codetome.zircon.api.color.TextColor
 import org.codetome.zircon.api.color.TextColorFactory
 
 

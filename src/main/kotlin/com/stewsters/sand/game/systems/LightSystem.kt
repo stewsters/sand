@@ -7,7 +7,7 @@ class LightSystem {
     fun process(world: World) {
 
         world.lightTurn()
-        world.pawnQueue
+        world.pawnList
                 .filter { it.lightProducer?.time ?: 0 > 0 }
                 .forEach {
                     val radius = it.lightProducer!!.radius

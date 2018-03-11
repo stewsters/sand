@@ -6,7 +6,7 @@ class TurnProcessSystem(val worldMap: World, val gravitySystem: GravitySystem = 
 
     fun process() {
 
-        while (worldMap.player.health.cur > 0) {
+        while (worldMap.player.health?.cur ?: 0 > 0) {
 
             // Break early if there is no one to work on
             if (worldMap.pawnQueue.size <= 0)
@@ -41,7 +41,9 @@ class TurnProcessSystem(val worldMap: World, val gravitySystem: GravitySystem = 
 
             currentPawn = worldMap.pawnQueue.poll()
             // increment time,
-            currentPawn.gameTurn = currentPawn.gameTurn + 100
+            val turnTaker = currentPawn.turnTaker!!
+
+            turnTaker.gameTurn = turnTaker.gameTurn + 100
             worldMap.pawnQueue.add(currentPawn)
         }
     }

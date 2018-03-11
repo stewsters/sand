@@ -19,7 +19,7 @@ class PlayActivity(var game: SandGame) : Activity {
     var world: World
 
     var turnProcessSystem: TurnProcessSystem
-    var lightSystem:LightSystem
+    var lightSystem: LightSystem
     var mapRenderSystem: MapRenderSystem
     var hudRenderSystem: HudRenderSystem
 
@@ -57,6 +57,7 @@ class PlayActivity(var game: SandGame) : Activity {
             'q' -> DescendAction()
 
             't' -> LightTorchAction()
+            'g' -> DropTorchAction()
             'r' -> AttachRopeAction()
             else -> null
         }
@@ -68,7 +69,7 @@ class PlayActivity(var game: SandGame) : Activity {
         turnProcessSystem.process()
         lightSystem.process(world)
 
-        if (world.player.health.cur <= 0) {
+        if (world.player.health?.cur ?: 0 <= 0) {
             println("Switch to Lose Activity")
             game.activity = LoseActivity(game)
         }
