@@ -12,6 +12,10 @@ class DescendAction : Action() {
             return ActionResult.FAILURE
         }
 
+        if (world.getCellTypeAt(pawn.pos).floor) {
+            return ActionResult.FAILURE
+        }
+
         if (world.getCellTypeAt(nextPos).wall) {
             //blocked
             return ActionResult.FAILURE

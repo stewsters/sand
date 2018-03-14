@@ -15,12 +15,13 @@ class ClimbAction : Action() {
             return ActionResult.FAILURE
         }
 
-        if (world.getCellTypeAt(nextPos).wall) {
+        val nextType = world.getCellTypeAt(nextPos)
+        if (nextType.wall || nextType.floor) {
             //blocked
             return ActionResult.FAILURE
         }
 
-        if (!pawn.canCatch(world)) {
+        if (!(pawn?.canCatch?.invoke(world,pawn.pos)?:false)) {
             return ActionResult.FAILURE
         }
 

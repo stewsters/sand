@@ -24,7 +24,7 @@ class GravitySystem(val worldMap: World) {
                     break
                 }
 
-                if (pawn.canCatch(worldMap)) {
+                if (pawn?.canCatch?.invoke(worldMap, pawn.pos) ?: false) {
                     println("Caught edge")
                     if (!worldMap.getCellTypeAt(pawn.pos + pawn.facing!!).isGrippable) {
                         for (facing in Facing.values()) {
