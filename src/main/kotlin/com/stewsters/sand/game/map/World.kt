@@ -11,7 +11,7 @@ class World(
         val player: Pawn,
         val map: Matrix3d<Chunk>) {
 
-    val light: Matrix3d<Int>
+    val light: Matrix3d<Double>
     val lightUpdate: Matrix3d<Int>
     var lightTurn: Int = 0
 
@@ -23,7 +23,7 @@ class World(
         pawnQueue = PriorityQueue()
         pawnList = mutableListOf()
 
-        light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
+        light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0.0 })
         lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
 
         addPawn(player)
@@ -101,18 +101,25 @@ class World(
         lightTurn++
     }
 
-    fun putLight(x: Int, y: Int, z: Int, amount: Int) {
+    fun putLight(x: Int, y: Int, z: Int, amount: Double) {
         if (outside(x, y, z))
             return
 
-        light[x, y, z] = amount
-        lightUpdate[x, y, z] = lightTurn
+        if (lightUpdate[x, y, z] == lightTurn) {
+            light[x, y, z] += amount
+        } else {
+            light[x, y, z] = amount
+            lightUpdate[x, y, z] = lightTurn
+        }
+
     }
 
-    fun getLight(x: Int, y: Int, z: Int): Int {
+    fun getLight(x: Int, y: Int, z: Int): Double {
+        if (z >= getZSize() - 2)
+            return 1.0
         if (lightUpdate[x, y, z] == lightTurn)
             return light[x, y, z]
         else
-            return 0
+            return 0.0
     }
 }

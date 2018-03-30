@@ -61,8 +61,8 @@ object RuinGen {
         }
 
         // Dig an entry chasm
-        for( x in -1..1){
-            for(y in (-1..1)){
+        for (x in -1..1) {
+            for (y in (-1..1)) {
                 for (z in (-6..-1)) {
                     worldMap.setCellTypeAt(maxSize.x / 2 + x, maxSize.y / 2 + y, maxSize.z + z, TileType.AIR)
                 }
@@ -181,9 +181,9 @@ object RuinGen {
         // Any unknown should become sand
 
 
-        for(z in (0 until maxSize.z)){
-            for(y in (0 until maxSize.y)){
-               for(x in (0 until maxSize.x)) {
+        for (z in (0 until maxSize.z)) {
+            for (y in (0 until maxSize.y)) {
+                for (x in (0 until maxSize.x)) {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.UNFINISHED) {
@@ -195,9 +195,9 @@ object RuinGen {
 
 
         // exposed wall should be floor
-        for(z in (0 until maxSize.z)){
-            for(y in (0 until maxSize.y)){
-                for(x in (0 until maxSize.x)) {
+        for (z in (0 until maxSize.z)) {
+            for (y in (0 until maxSize.y)) {
+                for (x in (0 until maxSize.x)) {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.AIR && worldMap.getCellTypeAt(x, y, z - 1).wall) {
