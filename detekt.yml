@@ -1,0 +1,6 @@
+failFast: true
+autoCorrect: true
+
+style:
+  MaxLineLength:
+    maxLineLength: 100

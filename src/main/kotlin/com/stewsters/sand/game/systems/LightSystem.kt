@@ -12,9 +12,9 @@ class LightSystem {
                 .forEach {
                     val radius = it.lightProducer!!.radius
 
-                    for (x in (-radius..radius)) {
-                        for (y in (-radius..radius)) {
-                            for (z in (-radius..radius)) {
+                    for (x in -radius..radius) {
+                        for (y in -radius..radius) {
+                            for (z in -radius..radius) {
 
                                 val distSquared = (x * x + y * y + z * z)
 

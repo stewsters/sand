@@ -12,6 +12,7 @@ buildscript {
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.2.30"
     id 'application'
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-4"
 }
 
 group 'com.stewsters'
@@ -34,4 +35,13 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+detekt {
+    version = "1.0.0.RC6-4"
+    profile("main") {
+        input = "$projectDir/src/main/kotlin"
+        config = "$projectDir/detekt.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    }
 }

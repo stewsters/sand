@@ -19,7 +19,7 @@ class LoseActivity(var game: SandGame) : Activity {
         val header = HeaderBuilder.newBuilder()
                 .position(Position.of(3, 3))
                 .text("You have died in the desert")
-                .build();
+                .build()
 
         val main = ButtonBuilder.newBuilder()
                 .text("Return To Main Menu")

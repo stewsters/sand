@@ -1,4 +1,4 @@
-package com.stewsters.sand.game.light;
+package com.stewsters.sand.game.light
 
 
 interface Evaluator3d {

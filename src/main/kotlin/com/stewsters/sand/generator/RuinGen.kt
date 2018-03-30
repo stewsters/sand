@@ -61,9 +61,9 @@ object RuinGen {
         }
 
         // Dig an entry chasm
-        (-1..1).forEach { x ->
-            (-1..1).forEach { y ->
-                (-6..-1).forEach { z ->
+        for( x in -1..1){
+            for(y in (-1..1)){
+                for (z in (-6..-1)) {
                     worldMap.setCellTypeAt(maxSize.x / 2 + x, maxSize.y / 2 + y, maxSize.z + z, TileType.AIR)
                 }
             }
@@ -106,7 +106,7 @@ object RuinGen {
             (0..50).forEach {
 
                 val room = mapChunkList[r.nextInt(mapChunkList.size)]
-                // todo: arbitrary rotation and reflection
+                //TODO: arbitrary rotation and reflection
 
                 var placement = Vec3[
                         worldMap.getXSize() / 2, // r.nextInt(worldMap.getXSize() - room.xSize),
@@ -179,9 +179,11 @@ object RuinGen {
 
         println("Finishing")
         // Any unknown should become sand
-        (0 until maxSize.z).forEach { z ->
-            (0 until maxSize.y).forEach { y ->
-                (0 until maxSize.x).forEach { x ->
+
+
+        for(z in (0 until maxSize.z)){
+            for(y in (0 until maxSize.y)){
+               for(x in (0 until maxSize.x)) {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.UNFINISHED) {
@@ -193,9 +195,9 @@ object RuinGen {
 
 
         // exposed wall should be floor
-        (0 until maxSize.z).forEach { z ->
-            (0 until maxSize.y).forEach { y ->
-                (0 until maxSize.x).forEach { x ->
+        for(z in (0 until maxSize.z)){
+            for(y in (0 until maxSize.y)){
+                for(x in (0 until maxSize.x)) {
                     val tileType = worldMap.getCellTypeAt(x, y, z)
 
                     if (tileType == TileType.AIR && worldMap.getCellTypeAt(x, y, z - 1).wall) {
