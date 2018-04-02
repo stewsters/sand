@@ -5,6 +5,8 @@ import com.stewsters.sand.game.light.Bresenham3d
 import com.stewsters.sand.game.light.LosEvaluator
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.getEuclideanDistance
+import com.stewsters.sand.game.math.lerp
+import com.stewsters.sand.game.math.limit
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TextCharacterBuilder
@@ -88,16 +90,4 @@ class MapRenderSystem {
         )
     }
 
-
-    // Linear Interpolate
-    private fun lerp(percentage: Double, one: Double, two: Double): Double =
-            one + (two - one) * percentage
-}
-
-private fun Double.limit(low: Double, high: Double): Double {
-    if (this < low)
-        return low
-    if (this > high)
-        return high
-    return this
 }
