@@ -13,15 +13,12 @@ import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.systems.LightSystem
 import com.stewsters.sand.game.systems.TurnProcessSystem
-import com.stewsters.sand.generator.RuinGen
 import org.codetome.zircon.api.builder.TerminalBuilder
 import org.codetome.zircon.api.input.KeyStroke
 import org.codetome.zircon.api.screen.Screen
 
 
-class PlayActivity(var game: SandGame) : Activity {
-
-    var world: World
+class PlayActivity(var game: SandGame, var world: World) : Activity {
 
     var turnProcessSystem: TurnProcessSystem
     var lightSystem: LightSystem
@@ -33,8 +30,6 @@ class PlayActivity(var game: SandGame) : Activity {
 
     init {
 
-        world = RuinGen.gen()
-
         //set up systems
         turnProcessSystem = TurnProcessSystem(world)
         lightSystem = LightSystem()
@@ -42,9 +37,7 @@ class PlayActivity(var game: SandGame) : Activity {
         mapRenderSystem = MapRenderSystem()
         hudRenderSystem = HudRenderSystem()
 
-
         screen = TerminalBuilder.createScreenFor(game.terminal)
-
     }
 
 

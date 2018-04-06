@@ -45,7 +45,7 @@ class MenuActivity(var game: SandGame) : Activity {
 
 
         play.onMousePressed(Consumer { mouseAction ->
-            game.activity = PlayActivity(game)
+            game.activity = GeneratingActivity(game)
             game.render()
         })
 
