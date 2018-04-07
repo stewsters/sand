@@ -10,6 +10,7 @@ import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.math.getManhattanDistance
 import com.stewsters.sand.game.math.pathfinder.findPath3d
 import com.stewsters.sand.game.pawn.AiControl
+import com.stewsters.sand.game.pawn.DangerNoodleAi
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Inventory
 import com.stewsters.sand.game.pawn.Pawn
@@ -134,7 +135,7 @@ object RuinGen {
                             placedRoomCenters.add(Vec3[placement.x + room.xSize / 2, placement.y + room.ySize / 2, placement.z])
                             break
                         }
-                        placement = placement + shift
+                        placement += shift
                     }
                 }
 //                println(placedRoomCenters)
@@ -216,7 +217,7 @@ object RuinGen {
                     TextCharacterBuilder.newBuilder().character('~').build(),
                     Health(1, 1),
                     TurnTaker((index + 1).toLong()),
-                    AiControl()
+                    DangerNoodleAi()
             ))
         }
 

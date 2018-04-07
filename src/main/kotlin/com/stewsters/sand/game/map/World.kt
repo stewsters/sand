@@ -120,6 +120,8 @@ class World(
 
     }
 
+    fun getLight(pos: Vec3): Double = getLight(pos.x, pos.y, pos.z)
+
     fun getLight(x: Int, y: Int, z: Int): Double {
         if (z >= getZSize() - 2)
             return 1.0
@@ -128,4 +130,5 @@ class World(
         else
             return 0.0
     }
+
 }

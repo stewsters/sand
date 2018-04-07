@@ -26,7 +26,7 @@ class Pawn(
     override fun compareTo(other: Pawn): Int = turnTaker?.gameTurn?.compareTo(other.turnTaker?.gameTurn ?: 0) ?: 0
 
 
-    fun getAction(): Action? {
+    fun getAction(world: World): Action? {
 //        if (playerControl != null) {
 //            val action = playerControl?.nextAction
 //            playerControl?.nextAction = null
@@ -35,7 +35,7 @@ class Pawn(
         if (nextAction != null)
             return nextAction
         if (aiControl != null) {
-            return aiControl?.getNextAction()
+            return aiControl?.getNextAction(world,this)
         }
         return null
     }

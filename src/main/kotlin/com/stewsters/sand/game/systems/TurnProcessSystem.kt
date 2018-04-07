@@ -13,7 +13,7 @@ class TurnProcessSystem(val worldMap: World, val gravitySystem: GravitySystem = 
                 return
 
             var currentPawn = worldMap.pawnQueue.peek()
-            var action = currentPawn.getAction()
+            var action = currentPawn.getAction(worldMap)
 
             if (action == null) {
                 gravitySystem.process()
