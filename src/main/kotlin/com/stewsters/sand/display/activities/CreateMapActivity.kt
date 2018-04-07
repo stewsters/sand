@@ -39,7 +39,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
     init {
 
-        map = Matrix3d<Tile>(xSize, ySize, zSize, { x, y, z ->
+        map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
             Tile(TileType.UNFINISHED)
         })
 
@@ -58,6 +58,21 @@ class CreateMapActivity(var game: SandGame) : Activity {
         when (keycode.getInputType()) {
             InputType.Escape -> {
                 game.activity = MenuActivity(game)
+            }
+            InputType.Backspace -> {
+            }
+
+            InputType.ArrowDown -> {
+                focus += Vec3[0, -1, 0]
+            }
+            InputType.ArrowLeft -> {
+                focus += Vec3[-1, 0, 0]
+            }
+            InputType.ArrowUp -> {
+                focus += Vec3[0, 1, 0]
+            }
+            InputType.ArrowRight -> {
+                focus += Vec3[1, 0, 0]
             }
             InputType.Character -> when (keycode.getCharacter()) {
                 's' -> focus += Vec3[0, -1, 0]
@@ -131,7 +146,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
                     if (appearance != null) {
                         textCharacter = appearance
                         tint = 1.0 / (tz + 1.0)
-                        break;
+                        break
                     }
                 }
                 screen.setCharacterAt(Position.of(x, yScreenSize - y - 1), textCharacter)
@@ -194,7 +209,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
         (zMin..zMax).forEach { z ->
             (yMin..yMax).forEach { y ->
                 (xMin..xMax).forEach { x ->
-                    file.appendText((map[x, y, z].type.ordinal + 65).toChar().toString());
+                    file.appendText((map[x, y, z].type.ordinal + 65).toChar().toString())
                 }
             }
         }
@@ -214,7 +229,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
 //        val map = Matrix3d(dimensions[0], dimensions[1], dimensions[2], { x, y, z -> Tile(TileType.UNFINISHED)})
 
-        map = Matrix3d<Tile>(xSize, ySize, zSize, { x, y, z ->
+        map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
             Tile(TileType.UNFINISHED)
         })
 

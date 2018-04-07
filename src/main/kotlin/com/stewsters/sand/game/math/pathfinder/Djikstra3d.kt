@@ -47,7 +47,7 @@ fun findPath3d(
         // for each point, set the cost, and a pointer back if we set the cost
         for (it in neighbors(cheapestNode)) {
             if (closeSet.contains(it))
-                continue;
+                continue
 
             val nextCost = costs[cheapestNode] + cost(it)
 

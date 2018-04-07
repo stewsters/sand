@@ -25,7 +25,7 @@ class MenuActivity(var game: SandGame) : Activity {
         val header = HeaderBuilder.newBuilder()
                 .position(Position.of(3, 0))
                 .text(GameInfo.subText)
-                .build();
+                .build()
 
         val play = ButtonBuilder.newBuilder()
                 .text("Play")

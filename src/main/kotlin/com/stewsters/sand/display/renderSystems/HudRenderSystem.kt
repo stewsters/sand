@@ -4,7 +4,7 @@ import com.stewsters.sand.game.map.World
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.screen.Screen
 
-class HudRenderSystem() {
+class HudRenderSystem {
 
 
     fun processSystem(gameMap: World, screen: Screen) {

@@ -33,7 +33,7 @@ class AttachRopeAction : Action() {
 
             val pos = Vec3(next.x, next.y, next.z - it)
             if (world.getCellTypeAt(pos).wall)
-                break;
+                break
 
             world.setCellTypeAt(pos, TileType.ROPE)
 

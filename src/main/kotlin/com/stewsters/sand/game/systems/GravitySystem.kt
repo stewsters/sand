@@ -24,7 +24,7 @@ class GravitySystem(val worldMap: World) {
                     break
                 }
 
-                if (pawn?.canCatch?.invoke(worldMap, pawn.pos) ?: false) {
+                if (pawn.canCatch?.invoke(worldMap, pawn.pos) == true) {
                     println("Caught edge")
                     if (!worldMap.getCellTypeAt(pawn.pos + pawn.facing!!).isGrippable) {
                         for (facing in Facing.values()) {
@@ -49,7 +49,7 @@ class GravitySystem(val worldMap: World) {
             if (fall > 3 && pawn.health != null) {
                 pawn.health.damage(fall - 3)
                 println("${pawn.name} fell ${fall * 8} feet.")
-                if (pawn.health?.cur ?: 0 <= 0) {
+                if (pawn.health.cur <= 0) {
                     toDelete.add(pawn)
                 }
             }
