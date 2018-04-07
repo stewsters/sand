@@ -81,9 +81,15 @@ class World(
     }
 
     fun movePawn(pawn: Pawn, next: Vec3) {
-        removePawn(pawn)
+        val x = pawn.pos.x
+        val y = pawn.pos.y
+        val z = pawn.pos.z
+
+        map[chunk(x), chunk(y), chunk(z)].pawns[tile(x), tile(y), tile(z)] = null
+
         pawn.pos = next
-        addPawn(pawn)
+
+        map[chunk(next.x), chunk(next.y), chunk(next.z)].pawns[tile(next.x), tile(next.y), tile(next.z)] = pawn
     }
 
     fun outside(p: Vec3): Boolean = outside(p.x, p.y, p.z)

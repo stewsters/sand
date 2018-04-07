@@ -48,7 +48,7 @@ class GravitySystem(val worldMap: World) {
 
             if (fall > 3 && pawn.health != null) {
                 pawn.health.damage(fall - 3)
-                println("You fell ${fall * 8} feet.")
+                println("${pawn.name} fell ${fall * 8} feet.")
                 if (pawn.health?.cur ?: 0 <= 0) {
                     toDelete.add(pawn)
                 }

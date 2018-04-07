@@ -9,10 +9,12 @@ import com.stewsters.sand.game.math.Matrix3d
 import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.math.getManhattanDistance
 import com.stewsters.sand.game.math.pathfinder.findPath3d
+import com.stewsters.sand.game.pawn.AiControl
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Inventory
 import com.stewsters.sand.game.pawn.Pawn
 import com.stewsters.sand.game.pawn.TurnTaker
+import org.codetome.zircon.api.builder.TextCharacterBuilder
 import java.io.File
 import java.util.*
 
@@ -204,6 +206,19 @@ object RuinGen {
                 }
             }
         }
+
+        worldMap.player.pos.vonNeumanNeighborhood2d().forEachIndexed { index, vec3 ->
+            worldMap.addPawn(Pawn(
+                    "Danger Noodle",
+                    vec3,
+                    TextCharacterBuilder.newBuilder().character('~').build(),
+                    Health(1,1),
+                    TurnTaker((index+1).toLong()),
+                    AiControl()
+            ))
+        }
+
+
 
         return worldMap
     }
