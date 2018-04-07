@@ -13,9 +13,9 @@ class HudRenderSystem() {
         if (playerHealth != null)
             drawLine(screen, 0, "HP: ${playerHealth.cur}")
 
-       val inv = gameMap.player.inventory
+        val inv = gameMap.player.inventory
 
-        if(inv!=null){
+        if (inv != null) {
             drawLine(screen, 1, "Torches: ${inv.torches}")
             drawLine(screen, 2, "Rope: ${inv.ropes}")
         }
@@ -23,7 +23,7 @@ class HudRenderSystem() {
 
     fun drawLine(screen: Screen, height: Int, text: String) {
         text.forEachIndexed { index, c ->
-            screen.setCharacterAt(Position.of(index,height),c)
+            screen.setCharacterAt(Position.of(index, height), c)
         }
 
     }
