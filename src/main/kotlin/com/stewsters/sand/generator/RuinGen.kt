@@ -9,7 +9,6 @@ import com.stewsters.sand.game.math.Matrix3d
 import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.math.getManhattanDistance
 import com.stewsters.sand.game.math.pathfinder.findPath3d
-import com.stewsters.sand.game.pawn.AiControl
 import com.stewsters.sand.game.pawn.DangerNoodleAi
 import com.stewsters.sand.game.pawn.Health
 import com.stewsters.sand.game.pawn.Inventory
@@ -116,7 +115,7 @@ object RuinGen {
                         worldMap.getYSize() / 2, // r.nextInt(worldMap.getYSize() - room.ySize),
                         z]
 
-                var shift = Vec3[
+                val shift = Vec3[
                         r.nextInt(7) - 3,
                         r.nextInt(7) - 3,
                         0
@@ -146,7 +145,7 @@ object RuinGen {
 
         println("Connecting")
         placedRoomCenters.groupBy { it.z }.forEach {
-            var list = it.value.sortedBy { it.x }
+            val list = it.value.sortedBy { it.x }
             println(it.key)
 
             for (i in 0 until list.size - 1) {

@@ -19,7 +19,7 @@ class MapRenderSystem {
 
     fun process(world: World, screen: Screen) {
 
-        var los = LosEvaluator(world)
+        val los = LosEvaluator(world)
         val playerPos = world.player.pos
 
         val xSize = screen.getBoundableSize().columns
@@ -52,7 +52,7 @@ class MapRenderSystem {
 
                         if (pawn != null) {
                             textCharacter = pawn.appearance
-                            break;
+                            break
                         }
 
                         val appearance = world.getCellTypeAt(worldX, worldY, tz).appearance

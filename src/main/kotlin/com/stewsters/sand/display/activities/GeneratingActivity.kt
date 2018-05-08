@@ -19,7 +19,7 @@ class GeneratingActivity(var game: SandGame) : Activity {
         val header = HeaderBuilder.newBuilder()
                 .position(Position.of(3, 3))
                 .text("Generating Map")
-                .build();
+                .build()
 
         screen.addComponent(header)
 

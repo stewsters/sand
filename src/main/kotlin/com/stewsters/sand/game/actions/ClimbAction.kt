@@ -21,7 +21,7 @@ class ClimbAction : Action() {
             return ActionResult.FAILURE
         }
 
-        if (!(pawn.canCatch?.invoke(world, pawn.pos) ?: false)) {
+        if (pawn.canCatch?.invoke(world, pawn.pos) != true) {
             return ActionResult.FAILURE
         }
 

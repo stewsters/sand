@@ -92,7 +92,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
     override fun mouseAction(mouseAction: MouseAction): Boolean {
 
 //        println(mouseAction)
-        // If we click on the pallete, select the color for that button.
+        // If we click on the palette, select the color for that button.
         // If we click the
 
         if (mouseAction.actionType in listOf(MouseActionType.MOUSE_CLICKED, MouseActionType.MOUSE_PRESSED, MouseActionType.MOUSE_DRAGGED)) {
@@ -153,7 +153,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
             }
         }
 
-        // Render pallete
+        // Render palette
         TileType.values().forEachIndexed { index, tileType ->
             screen.setCharacterAt(Position.of(0, index), tileType.appearance ?: Appearance.darkness)
         }
@@ -216,7 +216,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
     }
 
-    // Load up a saved chunk for futher editing.
+    // Load up a saved chunk for further editing.
     private fun load() {
 
         val file = dir.listFiles().first()

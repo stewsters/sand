@@ -20,7 +20,7 @@ class SandGame(val terminal: Terminal, var activity: Activity? = null) {
     }
 
     fun mouseAction(mouseAction: MouseAction) {
-        if (activity?.mouseAction(mouseAction) ?: false) {
+        if (activity?.mouseAction(mouseAction) == true) {
             activity?.render()
         }
     }

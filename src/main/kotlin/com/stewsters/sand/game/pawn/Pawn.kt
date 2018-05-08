@@ -35,7 +35,7 @@ class Pawn(
         if (nextAction != null)
             return nextAction
         if (aiControl != null) {
-            return aiControl?.getNextAction(world,this)
+            return aiControl?.getNextAction(world, this)
         }
         return null
     }

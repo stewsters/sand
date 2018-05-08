@@ -14,9 +14,9 @@ data class Vec3(val x: Int, val y: Int, val z: Int) {
 
         // how far off the standard size we will have cached.
         // These happen if you get negative movements or move off the board
-        private val offset = 4
-        private val size: Int = 128
-        private val actualSize = size + 2 * offset
+        private const val offset = 4
+        private const val size: Int = 128
+        private const val actualSize = size + 2 * offset
         private val pool = Array((actualSize * actualSize * actualSize), { i ->
             Vec3(
                     i % actualSize - offset,

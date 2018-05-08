@@ -16,12 +16,10 @@ class World(
     var lightTurn: Int = 0
 
     // for ones who can do something
-    val pawnQueue: PriorityQueue<Pawn>
-    val pawnList: MutableList<Pawn>
+    val pawnQueue = PriorityQueue<Pawn>()
+    val pawnList = mutableListOf<Pawn>()
 
     init {
-        pawnQueue = PriorityQueue()
-        pawnList = mutableListOf()
 
         light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0.0 })
         lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
@@ -94,11 +92,10 @@ class World(
 
     fun outside(p: Vec3): Boolean = outside(p.x, p.y, p.z)
 
-    fun outside(x: Int, y: Int, z: Int): Boolean {
-        return x < 0 || x >= getXSize()
-                || y < 0 || y >= getYSize()
-                || z < 0 || z >= getZSize()
-    }
+    fun outside(x: Int, y: Int, z: Int): Boolean =
+            x < 0 || x >= getXSize()
+                    || y < 0 || y >= getYSize()
+                    || z < 0 || z >= getZSize()
 
     fun contains(pos: Vec3): Boolean = !outside(pos)
 
