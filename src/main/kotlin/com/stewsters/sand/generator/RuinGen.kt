@@ -5,6 +5,7 @@ import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.Chunk
 import com.stewsters.sand.game.map.Tile
 import com.stewsters.sand.game.map.World
+import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.math.Matrix3d
 import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.math.getManhattanDistance
@@ -29,12 +30,14 @@ object RuinGen {
     val maxSize = Vec3[maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z]
     fun gen(): World {
 
+        val groundHeight = maxSize.z / 2
+
         val r = Random()
 
         val worldMap = World(
                 player = Pawn(
                         name = "Player",
-                        pos = Vec3[maxSize.x / 2, maxSize.y / 2 - 10, maxSize.z - 2],
+                        pos = Vec3[maxSize.x / 2, maxSize.y / 2 - 10, groundHeight],
                         health = Health(100, 100),
                         appearance = Appearance.player,
                         turnTaker = TurnTaker(gameTurn = 0),
@@ -56,17 +59,18 @@ object RuinGen {
 
         (0 until maxSize.x).forEach { x ->
             (0 until maxSize.y).forEach { y ->
-                //                worldMap.setCellTypeAt(x, y, 0, TileType.FLOOR)
-                worldMap.setCellTypeAt(x, y, maxSize.z - 1, TileType.AIR)
-                worldMap.setCellTypeAt(x, y, maxSize.z - 2, TileType.SAND_FLOOR)
+                (groundHeight until maxSize.z).forEach { z ->
+                    worldMap.setCellTypeAt(x, y, z, TileType.AIR)
+                }
+                worldMap.setCellTypeAt(x, y, groundHeight, TileType.SAND_FLOOR)
             }
         }
 
         // Dig an entry chasm
         for (x in -1..1) {
             for (y in (-1..1)) {
-                for (z in (-6..-1)) {
-                    worldMap.setCellTypeAt(maxSize.x / 2 + x, maxSize.y / 2 + y, maxSize.z + z, TileType.AIR)
+                for (z in (-5..0)) {
+                    worldMap.setCellTypeAt(maxSize.x / 2 + x, maxSize.y / 2 + y, groundHeight + z, TileType.AIR)
                 }
             }
         }
@@ -102,10 +106,10 @@ object RuinGen {
         // loop through, sliding the rooms to the center. Probably start with the bottom
         println("Placing Rooms")
         val placedRoomCenters = mutableListOf<Vec3>()
-        placedRoomCenters.add(Vec3[maxSize.x / 2, maxSize.y / 2, maxSize.z - 6])
+        placedRoomCenters.add(Vec3[maxSize.x / 2, maxSize.y / 2, groundHeight - 5])
 
-        (0 until maxSize.z - 2).forEach { z ->
-            (0..50).forEach {
+        (0 until groundHeight - 1).forEach { z ->
+            (0..10).forEach {
 
                 val room = mapChunkList[r.nextInt(mapChunkList.size)]
                 //TODO: arbitrary rotation and reflection
@@ -181,8 +185,6 @@ object RuinGen {
 
         println("Finishing")
         // Any unknown should become sand
-
-
         for (z in (0 until maxSize.z)) {
             for (y in (0 until maxSize.y)) {
                 for (x in (0 until maxSize.x)) {
@@ -209,17 +211,20 @@ object RuinGen {
             }
         }
 
-        worldMap.player.pos.vonNeumanNeighborhood2d().forEachIndexed { index, vec3 ->
-            worldMap.addPawn(Pawn(
-                    "Danger Noodle",
-                    vec3,
-                    TextCharacterBuilder.newBuilder().character('~').build(),
-                    Health(1, 1),
-                    TurnTaker((index + 1).toLong()),
-                    DangerNoodleAi()
-            ))
-        }
+//.forEachIndexed { index, vec3 ->
+        worldMap.addPawn(Pawn(
+                "Danger Noodle",
+                worldMap.player.pos.plus(Facing.UP),
+                TextCharacterBuilder.newBuilder().character('~').build(),
+                Health(1, 1),
+                TurnTaker((1).toLong()),
+                DangerNoodleAi()
+        ))
+        //      }
 
+        val playerArea = worldMap.getCellTypeAt(worldMap.player.pos)
+        assert(playerArea.floor)
+        assert(!playerArea.wall)
 
 
         return worldMap

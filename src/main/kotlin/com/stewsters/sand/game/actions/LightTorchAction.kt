@@ -22,7 +22,7 @@ class LightTorchAction : Action() {
 
         inventory.torches--
 
-        pawn.lightProducer = LightProducer(time = 100, radius = 4)
+        pawn.lightProducer = LightProducer(time = 100, radius = 8)
         return ActionResult.SUCCESS
     }
 

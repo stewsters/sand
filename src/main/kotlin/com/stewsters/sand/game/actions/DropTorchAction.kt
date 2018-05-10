@@ -27,7 +27,7 @@ class DropTorchAction : Action() {
                 name = "torch",
                 pos = pawn.pos + pawn.facing!!,
                 appearance = TextCharacterBuilder.newBuilder().character('t').build(),
-                lightProducer = LightProducer(100, 6)
+                lightProducer = LightProducer(100, 8)
         ))
 
         return ActionResult.SUCCESS

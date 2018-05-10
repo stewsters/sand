@@ -169,7 +169,7 @@ object Bresenham3d {
             err_2 = dz2 - l
             i = 0
             while (i < l) {
-                line.add(Vec3(point[0], point[1], point[2]))
+                line.add(Vec3[point[0], point[1], point[2]])
 
                 if (err_1 > 0) {
                     point[1] += y_inc
@@ -189,7 +189,7 @@ object Bresenham3d {
             err_2 = dz2 - m
             i = 0
             while (i < m) {
-                line.add(Vec3(point[0], point[1], point[2]))
+                line.add(Vec3[point[0], point[1], point[2]])
 
                 if (err_1 > 0) {
                     point[0] += x_inc
@@ -209,7 +209,7 @@ object Bresenham3d {
             err_2 = dx2 - n
             i = 0
             while (i < n) {
-                line.add(Vec3(point[0], point[1], point[2]))
+                line.add(Vec3[point[0], point[1], point[2]])
 
                 if (err_1 > 0) {
                     point[1] += y_inc
@@ -225,7 +225,7 @@ object Bresenham3d {
                 i++
             }
         }
-        line.add(Vec3(point[0], point[1], point[2]))
+        line.add(Vec3[point[0], point[1], point[2]])
 
         return line
     }

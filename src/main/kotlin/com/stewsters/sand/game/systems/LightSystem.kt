@@ -1,6 +1,7 @@
 package com.stewsters.sand.game.systems
 
 import com.stewsters.sand.game.map.World
+import kotlin.math.sqrt
 
 class LightSystem {
 
@@ -16,10 +17,12 @@ class LightSystem {
                         for (y in -radius..radius) {
                             for (z in -radius..radius) {
 
-                                val distSquared = (x * x + y * y + z * z)
+                                // Distance squared works better with lumens, but the human eye is more sensitive to
+                                // dim changes, which kind of bends it back the other way
+                                val dist = sqrt((x * x + y * y + z * z).toFloat())
 
-                                if (distSquared < radius * radius)
-                                    world.putLight(it.pos.x + x, it.pos.y + y, it.pos.z + z, 1.0 / distSquared)
+                                if (dist < radius)
+                                    world.putLight(it.pos.x + x, it.pos.y + y, it.pos.z + z, 1.0 / dist)
                             }
                         }
                     }

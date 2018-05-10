@@ -31,7 +31,7 @@ class AttachRopeAction : Action() {
 
         for (it in 0..5) {
 
-            val pos = Vec3(next.x, next.y, next.z - it)
+            val pos = Vec3[next.x, next.y, next.z - it]
             if (world.getCellTypeAt(pos).wall)
                 break
 
@@ -39,8 +39,6 @@ class AttachRopeAction : Action() {
 
         }
 
-
-        pawn.lightProducer = LightProducer(time = 100, radius = 4)
         return ActionResult.SUCCESS
     }
 
