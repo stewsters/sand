@@ -1,8 +1,8 @@
 package com.stewsters.sand.game.systems
 
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.pawn.Pawn
+import kaiju.math.Facing
 import java.util.*
 
 class GravitySystem(val worldMap: World) {

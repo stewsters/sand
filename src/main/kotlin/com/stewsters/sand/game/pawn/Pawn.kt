@@ -2,8 +2,8 @@ package com.stewsters.sand.game.pawn
 
 import com.stewsters.sand.game.actions.Action
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.Facing
-import com.stewsters.sand.game.math.Vec3
+import kaiju.math.Facing
+import kaiju.math.Vec3
 import org.codetome.zircon.api.TextCharacter
 
 class Pawn(

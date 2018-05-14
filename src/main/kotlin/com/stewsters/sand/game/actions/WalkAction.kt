@@ -1,8 +1,8 @@
 package com.stewsters.sand.game.actions
 
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.pawn.Pawn
+import kaiju.math.Facing
 
 data class WalkAction(val dir: Facing) : Action() {
     override fun onPerform(world: World, pawn: Pawn): ActionResult {

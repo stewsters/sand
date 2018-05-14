@@ -4,8 +4,8 @@ import com.stewsters.sand.SandGame
 import com.stewsters.sand.display.Appearance
 import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.Tile
-import com.stewsters.sand.game.math.Matrix3d
-import com.stewsters.sand.game.math.Vec3
+import kaiju.math.Matrix3d
+import kaiju.math.Vec3
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TerminalBuilder

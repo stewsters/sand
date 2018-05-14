@@ -1,9 +1,9 @@
 package com.stewsters.sand.game.map
 
 import com.stewsters.sand.game.enums.TileType
-import com.stewsters.sand.game.math.Matrix3d
-import com.stewsters.sand.game.math.Vec3
 import com.stewsters.sand.game.pawn.Pawn
+import kaiju.math.Matrix3d
+import kaiju.math.Vec3
 import java.util.*
 
 

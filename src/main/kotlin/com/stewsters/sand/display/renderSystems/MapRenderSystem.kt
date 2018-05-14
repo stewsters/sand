@@ -4,9 +4,9 @@ import com.stewsters.sand.display.Appearance
 import com.stewsters.sand.game.light.Bresenham3d
 import com.stewsters.sand.game.light.LosEvaluator
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.getEuclideanDistance
-import com.stewsters.sand.game.math.lerp
-import com.stewsters.sand.game.math.limit
+import kaiju.math.getEuclideanDistance
+import kaiju.math.lerp
+import kaiju.math.limit
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.TextCharacter
 import org.codetome.zircon.api.builder.TextCharacterBuilder

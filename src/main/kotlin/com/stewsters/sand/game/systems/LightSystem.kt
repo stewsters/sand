@@ -11,6 +11,9 @@ class LightSystem {
         world.pawnList
                 .filter { it.lightProducer?.time ?: 0 > 0 }
                 .forEach {
+                    // TODO: if we are expired, light burned out and remove it
+
+
                     val radius = it.lightProducer!!.radius
 
                     for (x in -radius..radius) {

@@ -4,7 +4,7 @@ import com.stewsters.sand.game.actions.Action
 import com.stewsters.sand.game.actions.AttackAction
 import com.stewsters.sand.game.actions.WalkAction
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.Facing
+import kaiju.math.Facing
 
 interface AiControl {
     fun getNextAction(world: World, pawn: Pawn): Action

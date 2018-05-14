@@ -21,13 +21,18 @@ mainClassName = "com.stewsters.sand.SandGameKt"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile("org.codetome.zircon:zircon:2017.4.0-RELEASE")
+    compile "org.codetome.zircon:zircon:2017.4.0-RELEASE"
+//    compile 'org.pcollections:pcollections:2.1.3'
     testCompile 'junit:junit:4.12'
+    implementation 'com.github.stewsters:kaiju:master-SNAPSHOT'
+
+
 }
 
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 compileKotlin {

@@ -10,9 +10,9 @@ import com.stewsters.sand.game.actions.DropTorchAction
 import com.stewsters.sand.game.actions.LightTorchAction
 import com.stewsters.sand.game.actions.WalkAction
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.math.Facing
 import com.stewsters.sand.game.systems.LightSystem
 import com.stewsters.sand.game.systems.TurnProcessSystem
+import kaiju.math.Facing
 import org.codetome.zircon.api.builder.TerminalBuilder
 import org.codetome.zircon.api.input.KeyStroke
 import org.codetome.zircon.api.screen.Screen

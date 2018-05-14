@@ -1,6 +1,6 @@
 package com.stewsters.sand.game.light
 
-import com.stewsters.sand.game.math.Vec3
+import kaiju.math.Vec3
 import java.util.*
 
 object Bresenham3d {
