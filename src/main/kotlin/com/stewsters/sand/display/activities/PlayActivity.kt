@@ -46,10 +46,10 @@ class PlayActivity(var game: SandGame, var world: World) : Activity {
 
 
         val action = when (keycode.getCharacter()) {
-            'w' -> WalkAction(Facing.UP)
-            'a' -> WalkAction(Facing.LEFT)
-            's' -> WalkAction(Facing.DOWN)
-            'd' -> WalkAction(Facing.RIGHT)
+            'w' -> WalkAction(Facing.NORTH)
+            'a' -> WalkAction(Facing.WEST)
+            's' -> WalkAction(Facing.SOUTH)
+            'd' -> WalkAction(Facing.EAST)
 
             'e' -> ClimbAction()
             'q' -> DescendAction()

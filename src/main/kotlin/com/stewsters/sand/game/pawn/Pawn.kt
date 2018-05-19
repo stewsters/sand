@@ -14,7 +14,7 @@ class Pawn(
         var turnTaker: TurnTaker? = null,
         var aiControl: AiControl? = null,
         var nextAction: Action? = null,
-        var facing: Facing? = Facing.UP,
+        var facing: Facing? = Facing.NORTH,
         var inventory: Inventory? = null,
         var lightProducer: LightProducer? = null,
         var canCatch: ((World, Vec3) -> Boolean)? = null

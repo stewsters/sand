@@ -214,7 +214,7 @@ object RuinGen {
 //.forEachIndexed { index, vec3 ->
         worldMap.addPawn(Pawn(
                 "Danger Noodle",
-                worldMap.player.pos.plus(Facing.UP),
+                worldMap.player.pos.plus(Facing.NORTH),
                 TextCharacterBuilder.newBuilder().character('~').build(),
                 Health(1, 1),
                 TurnTaker((1).toLong()),
