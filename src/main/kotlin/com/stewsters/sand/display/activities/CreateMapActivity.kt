@@ -178,7 +178,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
         var yMax = 0
         var zMax = 0
 
-        map.each { x, y, z, e ->
+        map.forEachIndexed { x, y, z, e ->
             if (e.type != TileType.UNFINISHED) {
                 xMin = min(x, xMin)
                 yMin = min(y, yMin)
