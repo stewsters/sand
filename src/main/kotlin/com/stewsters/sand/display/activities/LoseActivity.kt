@@ -11,10 +11,9 @@ import java.util.function.Consumer
 
 class LoseActivity(var game: SandGame) : Activity {
 
-    val screen: Screen
+    val screen: Screen = TerminalBuilder.createScreenFor(game.terminal)
 
     init {
-        screen = TerminalBuilder.createScreenFor(game.terminal)
 
         val header = HeaderBuilder.newBuilder()
                 .position(Position.of(3, 3))

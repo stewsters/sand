@@ -20,7 +20,7 @@ import org.codetome.zircon.api.screen.Screen
 
 class PlayActivity(var game: SandGame, var world: World) : Activity {
 
-    var turnProcessSystem: TurnProcessSystem
+    var turnProcessSystem: TurnProcessSystem = TurnProcessSystem(world)
     var lightSystem: LightSystem
     var mapRenderSystem: MapRenderSystem
     var hudRenderSystem: HudRenderSystem
@@ -31,7 +31,6 @@ class PlayActivity(var game: SandGame, var world: World) : Activity {
     init {
 
         //set up systems
-        turnProcessSystem = TurnProcessSystem(world)
         lightSystem = LightSystem()
 
         mapRenderSystem = MapRenderSystem()

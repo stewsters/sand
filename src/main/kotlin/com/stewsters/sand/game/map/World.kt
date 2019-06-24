@@ -21,8 +21,8 @@ class World(
 
     init {
 
-        light = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0.0 })
-        lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize(), { x, y, z -> 0 })
+        light = Matrix3d(getXSize(), getYSize(), getZSize()) { x, y, z -> 0.0 }
+        lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize()) { x, y, z -> 0 }
 
         addPawn(player)
 
