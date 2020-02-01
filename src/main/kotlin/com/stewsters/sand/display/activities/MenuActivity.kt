@@ -13,12 +13,10 @@ import java.util.function.Consumer
 class MenuActivity(val game: SandGame) : Activity {
 
 
-    val screen: Screen
+    val screen: Screen = TerminalBuilder.createScreenFor(game.terminal)
 
     init {
 
-
-        screen = TerminalBuilder.createScreenFor(game.terminal)
 
         // this will be 1x1 left and down from the top left
         // corner of the panel

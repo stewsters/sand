@@ -47,12 +47,12 @@ object RuinGen {
                             (worldMap.getCellTypeAt(pos) == TileType.ROPE) || pos.vonNeumanNeighborhood2d().any { worldMap.getCellTypeAt(it).isGrippable }
                         }
                 ),
-                map = Matrix3d(maxChunks, { x, y, z ->
+                map = Matrix3d(maxChunks) { x, y, z ->
                     Chunk(
-                            tiles = Matrix3d(chunkSize, { x, y, z -> Tile(TileType.UNFINISHED) }),
-                            pawns = Matrix3d(chunkSize, { x, y, z -> null })
+                            tiles = Matrix3d(chunkSize) { x, y, z -> Tile(TileType.UNFINISHED) },
+                            pawns = Matrix3d(chunkSize) { x, y, z -> null }
                     )
-                })
+                }
         )
 
         // Modify the world
@@ -87,12 +87,12 @@ object RuinGen {
                     val ySize = dimensions[1]
                     val zSize = dimensions[2]
 
-                    val map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
+                    val map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
                         Tile(TileType.UNFINISHED)
-                    })
+                    }
 
                     mapData.toCharArray()
-                            .map { TileType.values().get(it.toInt() - 65) }
+                            .map { TileType.values()[it.toInt() - 65] }
                             .forEachIndexed { i, tile ->
                                 val x = i % xSize
                                 val y = (i % (xSize * ySize)) / xSize

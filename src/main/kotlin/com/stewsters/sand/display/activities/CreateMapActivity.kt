@@ -39,9 +39,9 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
     init {
 
-        map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
+        map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
             Tile(TileType.UNFINISHED)
-        })
+        }
 
         screen = TerminalBuilder.createScreenFor(game.terminal)
 
@@ -229,11 +229,11 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
 //        val map = Matrix3d(dimensions[0], dimensions[1], dimensions[2], { x, y, z -> Tile(TileType.UNFINISHED)})
 
-        map = Matrix3d(xSize, ySize, zSize, { x, y, z ->
+        map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
             Tile(TileType.UNFINISHED)
-        })
+        }
 
-        val tiles = mapData.toCharArray().map { TileType.values().get(it.toInt() - 65) }
+        val tiles = mapData.toCharArray().map { TileType.values()[it.toInt() - 65] }
 
         val xOffset = xSize / 2 - localXSize / 2
         val yOffset = ySize / 2 - localYSize / 2

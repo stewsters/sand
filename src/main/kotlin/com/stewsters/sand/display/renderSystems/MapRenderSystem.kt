@@ -77,7 +77,7 @@ class MapRenderSystem {
     }
 
     // This is not ideal, it creates a lot of garbage
-    fun darken(textColor: TextColor, tintColor: TextColor, tint: Double, brightness: Double): TextColor {
+    private fun darken(textColor: TextColor, tintColor: TextColor, tint: Double, brightness: Double): TextColor {
 
         val r = lerp(tint, textColor.getRed().toDouble(), tintColor.getRed().toDouble())
         val g = lerp(tint, textColor.getGreen().toDouble(), tintColor.getGreen().toDouble())
