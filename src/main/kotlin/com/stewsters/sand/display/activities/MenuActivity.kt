@@ -10,7 +10,7 @@ import org.codetome.zircon.api.input.KeyStroke
 import org.codetome.zircon.api.screen.Screen
 import java.util.function.Consumer
 
-class MenuActivity(var game: SandGame) : Activity {
+class MenuActivity(val game: SandGame) : Activity {
 
 
     val screen: Screen
