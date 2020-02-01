@@ -83,9 +83,7 @@ object RuinGen {
                     val (metadata, mapData) = file.readText().split('\n')
 
                     val dimensions = metadata.split(" ").map { it.toInt() }
-                    val xSize = dimensions[0]
-                    val ySize = dimensions[1]
-                    val zSize = dimensions[2]
+                    val (xSize, ySize, zSize) = dimensions
 
                     val map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
                         Tile(TileType.UNFINISHED)

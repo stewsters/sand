@@ -223,9 +223,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
         val (metadata, mapData) = file.readText().split('\n')
 
         val dimensions = metadata.split(" ").map { it.toInt() }
-        val localXSize = dimensions[0]
-        val localYSize = dimensions[1]
-        val localZSize = dimensions[2]
+        val (localXSize, localYSize, localZSize) = dimensions
 
 //        val map = Matrix3d(dimensions[0], dimensions[1], dimensions[2], { x, y, z -> Tile(TileType.UNFINISHED)})
 
