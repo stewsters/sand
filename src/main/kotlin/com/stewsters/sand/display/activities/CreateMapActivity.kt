@@ -84,7 +84,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
                 'p' -> save()
                 'l' -> load()
             }
-
+            else-> println("Keycode $keycode pressed")
         }
 
     }
