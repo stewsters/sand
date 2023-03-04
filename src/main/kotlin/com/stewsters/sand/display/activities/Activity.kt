@@ -1,7 +1,7 @@
 package com.stewsters.sand.display.activities
 
-import org.hexworks.zircon.api.uievent.MouseEvent
 import org.hexworks.zircon.api.uievent.KeyCode
+import org.hexworks.zircon.api.uievent.MouseEvent
 
 
 interface Activity {

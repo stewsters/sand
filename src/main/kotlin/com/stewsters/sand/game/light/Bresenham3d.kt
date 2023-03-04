@@ -1,7 +1,6 @@
 package com.stewsters.sand.game.light
 
 import kaiju.math.Vec3
-import java.util.*
 import kotlin.math.abs
 
 object Bresenham3d {
@@ -126,7 +125,14 @@ object Bresenham3d {
             }
         }
 
-        return (point[0] == x2 && point[1] == y2 && point[2] == z2) || evaluator3d.isGood(last_point[0], last_point[1], last_point[2], point[0], point[1], point[2])
+        return (point[0] == x2 && point[1] == y2 && point[2] == z2) || evaluator3d.isGood(
+            last_point[0],
+            last_point[1],
+            last_point[2],
+            point[0],
+            point[1],
+            point[2]
+        )
     }
 
     fun getArray(x1: Int, y1: Int, z1: Int, x2: Int, y2: Int, z2: Int): ArrayList<Vec3> {

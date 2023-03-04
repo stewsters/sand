@@ -8,17 +8,17 @@ import kaiju.math.Vec3
 import org.hexworks.zircon.api.data.Tile
 
 class Pawn(
-        var name: String,
-        var pos: Vec3,
-        val appearance: Tile,
-        val health: Health? = null,
-        var turnTaker: TurnTaker? = null,
-        var aiControl: AiControl? = null,
-        var nextAction: Action? = null,
-        var facing: Facing? = Facing.NORTH,
-        var inventory: Inventory? = null,
-        var lightProducer: LightProducer? = null,
-        var canCatch: ((World, Vec3) -> Boolean)? = null
+    var name: String,
+    var pos: Vec3,
+    val appearance: Tile,
+    val health: Health? = null,
+    var turnTaker: TurnTaker? = null,
+    var aiControl: AiControl? = null,
+    var nextAction: Action? = null,
+    var facing: Facing? = Facing.NORTH,
+    var inventory: Inventory? = null,
+    var lightProducer: LightProducer? = null,
+    var canCatch: ((World, Vec3) -> Boolean)? = null
 //        ,
 //        var playerControl: PlayerControl? = null
 

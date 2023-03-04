@@ -87,7 +87,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
             KeyCode.KEY_E -> focus += Vec3(0, 0, 1)
             KeyCode.KEY_P -> save()
             KeyCode.KEY_L -> load()
-            else-> println("Unhandled Key $keycode")
+            else -> println("Unhandled Key $keycode")
         }
 
     }
@@ -163,7 +163,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
         // Render palette
         TileType.values().forEachIndexed { index, tileType ->
-            screen.draw( tileType.appearance ?: Appearance.darkness, Position.create(0, index))
+            screen.draw(tileType.appearance ?: Appearance.darkness, Position.create(0, index))
         }
 
         screen.display()

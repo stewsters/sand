@@ -9,8 +9,9 @@ import java.util.*
 
 
 class World(
-        val player: Pawn,
-        val map: Matrix3d<Chunk>) {
+    val player: Pawn,
+    val map: Matrix3d<Chunk>
+) {
 
     val light: Matrix3d<Double>
     val lightUpdate: Matrix3d<Int>
@@ -94,9 +95,9 @@ class World(
     fun outside(p: Vec3): Boolean = outside(p.x, p.y, p.z)
 
     fun outside(x: Int, y: Int, z: Int): Boolean =
-            x < 0 || x >= getXSize()
-                    || y < 0 || y >= getYSize()
-                    || z < 0 || z >= getZSize()
+        x < 0 || x >= getXSize()
+                || y < 0 || y >= getYSize()
+                || z < 0 || z >= getZSize()
 
     fun contains(pos: Vec3): Boolean = !outside(pos)
 

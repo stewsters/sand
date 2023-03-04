@@ -3,7 +3,6 @@ package com.stewsters.sand.game.systems
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.pawn.Pawn
 import kaiju.math.Facing
-import java.util.*
 
 class GravitySystem(val worldMap: World) {
 
@@ -18,8 +17,9 @@ class GravitySystem(val worldMap: World) {
             while (true) {
 
                 if (worldMap.outside(next)
-                        || worldMap.getCellTypeAt(pawn.pos).floor
-                        || worldMap.getCellTypeAt(next).wall) {
+                    || worldMap.getCellTypeAt(pawn.pos).floor
+                    || worldMap.getCellTypeAt(next).wall
+                ) {
                     // impact
                     break
                 }

@@ -42,7 +42,10 @@ fun main() {
     val tileGrid = startTileGrid(
         AppConfig.newBuilder() // The number of tiles horizontally, and vertically
             .withTitle(GameInfo.gameName)
-            .withSize(GameInfo.xSize, GameInfo.ySize) // You can choose from a wide array of CP437, True Type or Graphical tilesets
+            .withSize(
+                GameInfo.xSize,
+                GameInfo.ySize
+            ) // You can choose from a wide array of CP437, True Type or Graphical tilesets
             // that are built into Zircon
             .withDefaultTileset(rexPaint16x16())
             .build()
