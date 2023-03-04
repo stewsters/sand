@@ -14,8 +14,8 @@ import kaiju.math.Facing
 import kaiju.math.Matrix3d
 import kaiju.math.Vec3
 import kaiju.math.getManhattanDistance
+import kaiju.math.matrix3dOf
 import kaiju.pathfinder.findPath3d
-import org.codetome.zircon.api.builder.TextCharacterBuilder
 import java.io.File
 import java.util.*
 
@@ -24,10 +24,10 @@ object RuinGen {
 //    val groundHeight = 2
 //    val start = Vec3[10, 10, groundHeight]
 
-    val maxChunks = Vec3[2, 2, 2]
-    val chunkSize = Vec3[32, 32, 32]
+    val maxChunks = Vec3(2, 2, 2)
+    val chunkSize = Vec3(32, 32, 32)
 
-    val maxSize = Vec3[maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z]
+    val maxSize = Vec3(maxChunks.x * chunkSize.y, maxChunks.y * chunkSize.y, maxChunks.z * chunkSize.z)
     fun gen(): World {
 
         val groundHeight = maxSize.z / 2
@@ -35,24 +35,25 @@ object RuinGen {
         val r = Random()
 
         val worldMap = World(
-                player = Pawn(
-                        name = "Player",
-                        pos = Vec3[maxSize.x / 2, maxSize.y / 2 - 10, groundHeight],
-                        health = Health(100, 100),
-                        appearance = Appearance.player,
-                        turnTaker = TurnTaker(gameTurn = 0),
-                        inventory = Inventory(4, 6),
-                        canCatch = { worldMap: World, pos: Vec3 ->
-                            // if we are on a rope, then we are caught
-                            (worldMap.getCellTypeAt(pos) == TileType.ROPE) || pos.vonNeumanNeighborhood2d().any { worldMap.getCellTypeAt(it).isGrippable }
-                        }
-                ),
-                map = Matrix3d(maxChunks) { x, y, z ->
-                    Chunk(
-                            tiles = Matrix3d(chunkSize) { x, y, z -> Tile(TileType.UNFINISHED) },
-                            pawns = Matrix3d(chunkSize) { x, y, z -> null }
-                    )
+            player = Pawn(
+                name = "Player",
+                pos = Vec3(maxSize.x / 2, maxSize.y / 2 - 10, groundHeight),
+                health = Health(100, 100),
+                appearance = Appearance.player,
+                turnTaker = TurnTaker(gameTurn = 0),
+                inventory = Inventory(4, 6),
+                canCatch = { worldMap: World, pos: Vec3 ->
+                    // if we are on a rope, then we are caught
+                    (worldMap.getCellTypeAt(pos) == TileType.ROPE) || pos.vonNeumanNeighborhood2d()
+                        .any { worldMap.getCellTypeAt(it).isGrippable }
                 }
+            ),
+            map = matrix3dOf(maxChunks) { x, y, z ->
+                Chunk(
+                    tiles = matrix3dOf(chunkSize) { x, y, z -> Tile(TileType.UNFINISHED) },
+                    pawns = matrix3dOf(chunkSize) { x, y, z -> null }
+                )
+            }
         )
 
         // Modify the world
@@ -78,33 +79,33 @@ object RuinGen {
         println("Loading Rooms")
         // load in directory of rooms
         val mapChunkList = File("chunks").listFiles()
-                .filter { it.name.endsWith(".cnk") }
-                .map { file ->
-                    val (metadata, mapData) = file.readText().split('\n')
+            .filter { it.name.endsWith(".cnk") }
+            .map { file ->
+                val (metadata, mapData) = file.readText().split('\n')
 
-                    val dimensions = metadata.split(" ").map { it.toInt() }
-                    val (xSize, ySize, zSize) = dimensions
+                val dimensions = metadata.split(" ").map { it.toInt() }
+                val (xSize, ySize, zSize) = dimensions
 
-                    val map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
-                        Tile(TileType.UNFINISHED)
-                    }
-
-                    mapData.toCharArray()
-                            .map { TileType.values()[it.toInt() - 65] }
-                            .forEachIndexed { i, tile ->
-                                val x = i % xSize
-                                val y = (i % (xSize * ySize)) / xSize
-                                val z = i / (xSize * ySize)
-                                map[x, y, z].type = tile
-                            }
-                    map
+                val map = matrix3dOf(xSize, ySize, zSize) { x, y, z ->
+                    Tile(TileType.UNFINISHED)
                 }
+
+                mapData.toCharArray()
+                    .map { TileType.values()[it.code - 65] }
+                    .forEachIndexed { i, tile ->
+                        val x = i % xSize
+                        val y = (i % (xSize * ySize)) / xSize
+                        val z = i / (xSize * ySize)
+                        map[x, y, z].type = tile
+                    }
+                map
+            }
 
 
         // loop through, sliding the rooms to the center. Probably start with the bottom
         println("Placing Rooms")
         val placedRoomCenters = mutableListOf<Vec3>()
-        placedRoomCenters.add(Vec3[maxSize.x / 2, maxSize.y / 2, groundHeight - 5])
+        placedRoomCenters.add(Vec3(maxSize.x / 2, maxSize.y / 2, groundHeight - 5))
 
         (0 until groundHeight - 1).forEach { z ->
             (0..10).forEach {
@@ -112,28 +113,36 @@ object RuinGen {
                 val room = mapChunkList[r.nextInt(mapChunkList.size)]
                 //TODO: arbitrary rotation and reflection
 
-                var placement = Vec3[
-                        worldMap.getXSize() / 2, // r.nextInt(worldMap.getXSize() - room.xSize),
-                        worldMap.getYSize() / 2, // r.nextInt(worldMap.getYSize() - room.ySize),
-                        z]
+                var placement = Vec3(
+                    worldMap.getXSize() / 2, // r.nextInt(worldMap.getXSize() - room.xSize),
+                    worldMap.getYSize() / 2, // r.nextInt(worldMap.getYSize() - room.ySize),
+                    z
+                )
 
-                val shift = Vec3[
-                        r.nextInt(7) - 3,
-                        r.nextInt(7) - 3,
-                        0
-                ]
-                if (shift != Vec3[0, 0, 0]) {
+                val shift = Vec3(
+                    r.nextInt(7) - 3,
+                    r.nextInt(7) - 3,
+                    0
+                )
+                if (shift != Vec3(0, 0, 0)) {
 
 
                     while (true) {
                         if (placement.x < 0 || placement.y < 0 || placement.z < 0 ||
-                                placement.x + room.xSize >= worldMap.getXSize() ||
-                                placement.y + room.ySize >= worldMap.getYSize() ||
-                                placement.z + room.zSize >= worldMap.getZSize()) {
+                            placement.x + room.xSize >= worldMap.getXSize() ||
+                            placement.y + room.ySize >= worldMap.getYSize() ||
+                            placement.z + room.zSize >= worldMap.getZSize()
+                        ) {
                             break
                         }
                         if (attemptPlacement(worldMap, room, placement)) {
-                            placedRoomCenters.add(Vec3[placement.x + room.xSize / 2, placement.y + room.ySize / 2, placement.z])
+                            placedRoomCenters.add(
+                                Vec3(
+                                    placement.x + room.xSize / 2,
+                                    placement.y + room.ySize / 2,
+                                    placement.z
+                                )
+                            )
                             break
                         }
                         placement += shift
@@ -158,12 +167,12 @@ object RuinGen {
                     continue
 
                 findPath3d(
-                        maxSize,
-                        { worldMap.getCellTypeAt(it).cost },
-                        { p1, p2 -> 0.25 * getManhattanDistance(p1, p2) },
-                        { it.vonNeumanNeighborhood2d().filter { worldMap.contains(it) } },
-                        curRoom,
-                        nextRoom
+                    maxSize,
+                    { worldMap.getCellTypeAt(it).cost },
+                    { p1, p2 -> 0.25 * getManhattanDistance(p1, p2) },
+                    { it.vonNeumanNeighborhood2d().filter { worldMap.contains(it) } },
+                    curRoom,
+                    nextRoom
                 )?.forEach {
 
                     val type = worldMap.getCellTypeAt(it)
@@ -210,14 +219,16 @@ object RuinGen {
         }
 
 //.forEachIndexed { index, vec3 ->
-        worldMap.addPawn(Pawn(
+        worldMap.addPawn(
+            Pawn(
                 "Danger Noodle",
                 worldMap.player.pos.plus(Facing.NORTH),
-                TextCharacterBuilder.newBuilder().character('~').build(),
+                Appearance.nopeRope,
                 Health(1, 1),
                 TurnTaker((1).toLong()),
                 DangerNoodleAi()
-        ))
+            )
+        )
         //      }
 
         val playerArea = worldMap.getCellTypeAt(worldMap.player.pos)
@@ -232,7 +243,12 @@ object RuinGen {
         for (zMod in (0 until room.zSize)) {
             for (yMod in (0 until room.ySize)) {
                 for (xMod in (0 until room.xSize)) {
-                    if (worldMap.getCellTypeAt(placement.x + xMod, placement.y + yMod, placement.z + zMod) != TileType.UNFINISHED) {
+                    if (worldMap.getCellTypeAt(
+                            placement.x + xMod,
+                            placement.y + yMod,
+                            placement.z + zMod
+                        ) != TileType.UNFINISHED
+                    ) {
                         return false
                     }
                 }
@@ -242,7 +258,12 @@ object RuinGen {
         for (zMod in (0 until room.zSize)) {
             for (yMod in (0 until room.ySize)) {
                 for (xMod in (0 until room.xSize)) {
-                    worldMap.setCellTypeAt(placement.x + xMod, placement.y + yMod, placement.z + zMod, room[xMod, yMod, zMod].type)
+                    worldMap.setCellTypeAt(
+                        placement.x + xMod,
+                        placement.y + yMod,
+                        placement.z + zMod,
+                        room[xMod, yMod, zMod].type
+                    )
                 }
             }
         }

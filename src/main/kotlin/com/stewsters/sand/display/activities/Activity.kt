@@ -1,7 +1,8 @@
 package com.stewsters.sand.display.activities
 
-import org.codetome.zircon.api.input.KeyStroke
-import org.codetome.zircon.api.input.MouseAction
+import org.hexworks.zircon.api.uievent.MouseEvent
+import org.hexworks.zircon.api.uievent.KeyCode
+
 
 interface Activity {
 
@@ -9,7 +10,7 @@ interface Activity {
 
     fun render()
 
-    fun keyPressed(keycode: KeyStroke)
-    fun mouseAction(mouseAction: MouseAction): Boolean = false
+    fun keyPressed(keycode: KeyCode)
+    fun mouseAction(mouseAction: MouseEvent): Boolean = false
 
 }

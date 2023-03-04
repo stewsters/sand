@@ -1,8 +1,10 @@
 package com.stewsters.sand.display.renderSystems
 
 import com.stewsters.sand.game.map.World
-import org.codetome.zircon.api.Position
-import org.codetome.zircon.api.screen.Screen
+import org.hexworks.zircon.api.data.Position
+import org.hexworks.zircon.api.data.Tile
+import org.hexworks.zircon.api.graphics.StyleSet
+import org.hexworks.zircon.api.screen.Screen
 
 class HudRenderSystem {
 
@@ -23,7 +25,7 @@ class HudRenderSystem {
 
     fun drawLine(screen: Screen, height: Int, text: String) {
         text.forEachIndexed { index, c ->
-            screen.setCharacterAt(Position.of(index, height), c)
+            screen.draw(Tile.createCharacterTile(c, StyleSet.defaultStyle()), Position.create(index, height))
         }
 
     }

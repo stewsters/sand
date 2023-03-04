@@ -4,12 +4,13 @@ import com.stewsters.sand.game.actions.Action
 import com.stewsters.sand.game.map.World
 import kaiju.math.Facing
 import kaiju.math.Vec3
-import org.codetome.zircon.api.TextCharacter
+
+import org.hexworks.zircon.api.data.Tile
 
 class Pawn(
         var name: String,
         var pos: Vec3,
-        val appearance: TextCharacter,
+        val appearance: Tile,
         val health: Health? = null,
         var turnTaker: TurnTaker? = null,
         var aiControl: AiControl? = null,

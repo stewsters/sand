@@ -1,34 +1,33 @@
 package com.stewsters.sand.display.activities
 
 import com.stewsters.sand.SandGame
-import org.codetome.zircon.api.Position
-import org.codetome.zircon.api.builder.TerminalBuilder
-import org.codetome.zircon.api.component.builder.ButtonBuilder
-import org.codetome.zircon.api.component.builder.HeaderBuilder
-import org.codetome.zircon.api.input.KeyStroke
-import org.codetome.zircon.api.screen.Screen
-import java.util.function.Consumer
+import org.hexworks.zircon.api.builder.component.ButtonBuilder
+import org.hexworks.zircon.api.builder.component.HeaderBuilder
+import org.hexworks.zircon.api.builder.screen.ScreenBuilder
+import org.hexworks.zircon.api.data.Position
+import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.KeyCode
 
 class LoseActivity(var game: SandGame) : Activity {
 
-    val screen: Screen = TerminalBuilder.createScreenFor(game.terminal)
+    val screen: Screen = ScreenBuilder.createScreenFor(game.tileGrid)
 
     init {
 
         val header = HeaderBuilder.newBuilder()
-                .position(Position.of(3, 3))
-                .text("You have died in the desert")
-                .build()
+            .withPosition(Position.create(3, 3))
+            .withText("You have died in the desert")
+            .build()
 
         val main = ButtonBuilder.newBuilder()
-                .text("Return To Main Menu")
-                .position(Position.of(0, 2).relativeToBottomOf(header))
-                .build()
+            .withText("Return To Main Menu")
+            .withPosition(Position.create(0, 2).relativeToBottomOf(header))
+            .build()
 
-        main.onMousePressed(Consumer { mouseAction ->
+        main.onActivated { mouseAction ->
             game.activity = MenuActivity(game)
             game.render()
-        })
+        }
 
         screen.addComponent(header)
         screen.addComponent(main)
@@ -38,8 +37,9 @@ class LoseActivity(var game: SandGame) : Activity {
         screen.display()
     }
 
-    override fun keyPressed(keycode: KeyStroke) {
+    override fun keyPressed(keycode: KeyCode) {
 
     }
+
 
 }

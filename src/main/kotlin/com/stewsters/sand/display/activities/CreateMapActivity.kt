@@ -6,14 +6,14 @@ import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.Tile
 import kaiju.math.Matrix3d
 import kaiju.math.Vec3
-import org.codetome.zircon.api.Position
-import org.codetome.zircon.api.TextCharacter
-import org.codetome.zircon.api.builder.TerminalBuilder
-import org.codetome.zircon.api.input.InputType
-import org.codetome.zircon.api.input.KeyStroke
-import org.codetome.zircon.api.input.MouseAction
-import org.codetome.zircon.api.input.MouseActionType
-import org.codetome.zircon.api.screen.Screen
+import kaiju.math.matrix3dOf
+
+import org.hexworks.zircon.api.builder.screen.ScreenBuilder
+import org.hexworks.zircon.api.data.Position
+import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.KeyCode
+import org.hexworks.zircon.api.uievent.MouseEvent
+import org.hexworks.zircon.api.uievent.MouseEventType
 import java.io.File
 import java.util.*
 import kotlin.math.max
@@ -31,7 +31,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
     val ySize = 30
     val zSize = 30
 
-    private var focus = Vec3[xSize / 2, ySize / 2, zSize / 2]
+    private var focus = Vec3(xSize / 2, ySize / 2, zSize / 2)
 
     val selectedType = mutableMapOf<Int, TileType>()
 
@@ -39,14 +39,14 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
     init {
 
-        map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
+        map = matrix3dOf(xSize, ySize, zSize) { x, y, z ->
             Tile(TileType.UNFINISHED)
         }
 
-        screen = TerminalBuilder.createScreenFor(game.terminal)
+        screen = ScreenBuilder.createScreenFor(game.tileGrid)
 
-        xScreenSize = screen.getBoundableSize().columns
-        yScreenSize = screen.getBoundableSize().rows
+        xScreenSize = screen.width
+        yScreenSize = screen.height
 
         dir = File("chunks")
         dir.mkdirs()
@@ -54,58 +54,66 @@ class CreateMapActivity(var game: SandGame) : Activity {
     }
 
 
-    override fun keyPressed(keycode: KeyStroke) {
-        when (keycode.getInputType()) {
-            InputType.Escape -> {
+    override fun keyPressed(keycode: KeyCode) {
+        when (keycode) {
+            KeyCode.ESCAPE -> {
                 game.activity = MenuActivity(game)
             }
-            InputType.Backspace -> {
+
+            KeyCode.BACKSPACE -> {
             }
 
-            InputType.ArrowDown -> {
-                focus += Vec3[0, -1, 0]
-            }
-            InputType.ArrowLeft -> {
-                focus += Vec3[-1, 0, 0]
-            }
-            InputType.ArrowUp -> {
-                focus += Vec3[0, 1, 0]
-            }
-            InputType.ArrowRight -> {
-                focus += Vec3[1, 0, 0]
-            }
-            InputType.Character -> when (keycode.getCharacter()) {
-                's' -> focus += Vec3[0, -1, 0]
-                'w' -> focus += Vec3[0, 1, 0]
-                'a' -> focus += Vec3[-1, 0, 0]
-                'd' -> focus += Vec3[1, 0, 0]
-                'q' -> focus += Vec3[0, 0, -1]
-                'e' -> focus += Vec3[0, 0, 1]
-                'p' -> save()
-                'l' -> load()
+            KeyCode.DOWN -> {
+                focus += Vec3(0, -1, 0)
             }
 
+            KeyCode.LEFT -> {
+                focus += Vec3(-1, 0, 0)
+            }
+
+            KeyCode.UP -> {
+                focus += Vec3(0, 1, 0)
+            }
+
+            KeyCode.RIGHT -> {
+                focus += Vec3(1, 0, 0)
+            }
+
+            KeyCode.KEY_S -> focus += Vec3(0, -1, 0)
+            KeyCode.KEY_W -> focus += Vec3(0, 1, 0)
+            KeyCode.KEY_A -> focus += Vec3(-1, 0, 0)
+            KeyCode.KEY_D -> focus += Vec3(1, 0, 0)
+            KeyCode.KEY_Q -> focus += Vec3(0, 0, -1)
+            KeyCode.KEY_E -> focus += Vec3(0, 0, 1)
+            KeyCode.KEY_P -> save()
+            KeyCode.KEY_L -> load()
+            else-> println("Unhandled Key $keycode")
         }
 
     }
 
-    override fun mouseAction(mouseAction: MouseAction): Boolean {
+    override fun mouseAction(mouseAction: MouseEvent): Boolean {
 
 //        println(mouseAction)
         // If we click on the palette, select the color for that button.
         // If we click the
 
-        if (mouseAction.actionType in listOf(MouseActionType.MOUSE_CLICKED, MouseActionType.MOUSE_PRESSED, MouseActionType.MOUSE_DRAGGED)) {
-            if (mouseAction.position.column == 0 && mouseAction.position.row < TileType.values().size) {
+        if (mouseAction.type in listOf(
+                MouseEventType.MOUSE_CLICKED,
+                MouseEventType.MOUSE_PRESSED,
+                MouseEventType.MOUSE_DRAGGED
+            )
+        ) {
+            if (mouseAction.position.x == 0 && mouseAction.position.y < TileType.values().size) {
                 // select color for that button
 
-                selectedType[mouseAction.button] = TileType.values()[mouseAction.position.row]
+                selectedType[mouseAction.button] = TileType.values()[mouseAction.position.y]
                 println(selectedType[mouseAction.button].toString() + " selected")
             } else {
                 // TODO: draw on map if map contains this point
 
-                val x = mouseAction.position.column - xScreenSize / 2 + focus.x
-                val y = -(mouseAction.position.row - yScreenSize / 2 - focus.y) - 1
+                val x = mouseAction.position.x - xScreenSize / 2 + focus.x
+                val y = -(mouseAction.position.y - yScreenSize / 2 - focus.y) - 1
                 val z = focus.z
 
                 println("$x $y $z")
@@ -134,7 +142,7 @@ class CreateMapActivity(var game: SandGame) : Activity {
                 val worldY = y - yScreenSize / 2 + focus.y
                 val worldZ = focus.z
 
-                var textCharacter: TextCharacter = Appearance.darkness
+                var textCharacter = Appearance.darkness
                 var tint = 1.0
                 for (down in 0 until 4) {
 
@@ -149,13 +157,13 @@ class CreateMapActivity(var game: SandGame) : Activity {
                         break
                     }
                 }
-                screen.setCharacterAt(Position.of(x, yScreenSize - y - 1), textCharacter)
+                screen.draw(textCharacter, Position.create(x, yScreenSize - y - 1))
             }
         }
 
         // Render palette
         TileType.values().forEachIndexed { index, tileType ->
-            screen.setCharacterAt(Position.of(0, index), tileType.appearance ?: Appearance.darkness)
+            screen.draw( tileType.appearance ?: Appearance.darkness, Position.create(0, index))
         }
 
         screen.display()
@@ -227,11 +235,11 @@ class CreateMapActivity(var game: SandGame) : Activity {
 
 //        val map = Matrix3d(dimensions[0], dimensions[1], dimensions[2], { x, y, z -> Tile(TileType.UNFINISHED)})
 
-        map = Matrix3d(xSize, ySize, zSize) { x, y, z ->
+        map = matrix3dOf(xSize, ySize, zSize) { x, y, z ->
             Tile(TileType.UNFINISHED)
         }
 
-        val tiles = mapData.toCharArray().map { TileType.values()[it.toInt() - 65] }
+        val tiles = mapData.toCharArray().map { TileType.values()[it.code - 65] }
 
         val xOffset = xSize / 2 - localXSize / 2
         val yOffset = ySize / 2 - localYSize / 2

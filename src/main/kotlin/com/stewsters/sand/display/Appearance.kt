@@ -1,43 +1,44 @@
 package com.stewsters.sand.display
 
-import org.codetome.zircon.api.builder.TextCharacterBuilder
-import org.codetome.zircon.api.color.TextColorFactory
+import org.hexworks.zircon.api.color.ANSITileColor
+import org.hexworks.zircon.api.color.TileColor
+import org.hexworks.zircon.api.data.Tile
 
 class Appearance {
 
     companion object {
 
-        var white = TextColorFactory.fromString("#ffffff")
-        var black = TextColorFactory.fromString("#000000")
-        val purple = TextColorFactory.fromString("#9932CC")
-        val green = TextColorFactory.fromString("#11ff11")
+        var white = ANSITileColor.WHITE //TextColorFactory.fromString("#ffffff")
+        var black = ANSITileColor.BLACK //TextColorFactory.fromString("#000000")
+        val purple = TileColor.fromString("#9932CC")
+        val green = TileColor.fromString("#11ff11")
 
-        var player = TextCharacterBuilder.newBuilder()
-                .character('@')
-                .foregroundColor(white)
-                .backgroundColor(black)
-                .build()
+        var player = Tile.newBuilder() // TextCharacterBuilder.newBuilder()
+            .withCharacter('@')
+            .withForegroundColor(white)
+            .withBackgroundColor(black)
+            .build()
 
-        var mummy = TextCharacterBuilder.newBuilder()
-                .character('M')
-                .foregroundColor(white)
-                .backgroundColor(black)
-                .build()
+        var mummy = Tile.newBuilder()
+            .withCharacter('M')
+            .withForegroundColor(white)
+            .withBackgroundColor(black)
+            .build()
 
-        var nopeRope = TextCharacterBuilder.newBuilder()
-                .character('~')
-                .foregroundColor(green)
-                .backgroundColor(black)
-                .build()
+        var nopeRope = Tile.newBuilder()
+            .withCharacter('~')
+            .withForegroundColor(green)
+            .withBackgroundColor(black)
+            .build()
 
-        var ankh = TextCharacterBuilder.newBuilder()
-                .character('\u2625')
-                .build()
+        var ankh = Tile.newBuilder()
+            .withCharacter('\u2625')
+            .build()
 
-        val darkness = TextCharacterBuilder.newBuilder()
-                .character(' ')
-                .foregroundColor(black)
-                .build()
+        val darkness = Tile.newBuilder()
+            .withCharacter(' ')
+            .withForegroundColor(black)
+            .build()
 
 
     }

@@ -2,6 +2,7 @@ package com.stewsters.sand.game.light
 
 import kaiju.math.Vec3
 import java.util.*
+import kotlin.math.abs
 
 object Bresenham3d {
 
@@ -35,11 +36,11 @@ object Bresenham3d {
         dy = y2 - y1
         dz = z2 - z1
         x_inc = if (dx < 0) -1 else 1
-        l = Math.abs(dx)
+        l = abs(dx)
         y_inc = if (dy < 0) -1 else 1
-        m = Math.abs(dy)
+        m = abs(dy)
         z_inc = if (dz < 0) -1 else 1
-        n = Math.abs(dz)
+        n = abs(dz)
         dx2 = l shl 1
         dy2 = m shl 1
         dz2 = n shl 1
@@ -155,11 +156,11 @@ object Bresenham3d {
         dy = y2 - y1
         dz = z2 - z1
         x_inc = if (dx < 0) -1 else 1
-        l = Math.abs(dx)
+        l = abs(dx)
         y_inc = if (dy < 0) -1 else 1
-        m = Math.abs(dy)
+        m = abs(dy)
         z_inc = if (dz < 0) -1 else 1
-        n = Math.abs(dz)
+        n = abs(dz)
         dx2 = l shl 1
         dy2 = m shl 1
         dz2 = n shl 1
@@ -169,7 +170,7 @@ object Bresenham3d {
             err_2 = dz2 - l
             i = 0
             while (i < l) {
-                line.add(Vec3[point[0], point[1], point[2]])
+                line.add(Vec3(point[0], point[1], point[2]))
 
                 if (err_1 > 0) {
                     point[1] += y_inc
@@ -189,7 +190,7 @@ object Bresenham3d {
             err_2 = dz2 - m
             i = 0
             while (i < m) {
-                line.add(Vec3[point[0], point[1], point[2]])
+                line.add(Vec3(point[0], point[1], point[2]))
 
                 if (err_1 > 0) {
                     point[0] += x_inc
@@ -209,7 +210,7 @@ object Bresenham3d {
             err_2 = dx2 - n
             i = 0
             while (i < n) {
-                line.add(Vec3[point[0], point[1], point[2]])
+                line.add(Vec3(point[0], point[1], point[2]))
 
                 if (err_1 > 0) {
                     point[1] += y_inc
@@ -225,7 +226,7 @@ object Bresenham3d {
                 i++
             }
         }
-        line.add(Vec3[point[0], point[1], point[2]])
+        line.add(Vec3(point[0], point[1], point[2]))
 
         return line
     }

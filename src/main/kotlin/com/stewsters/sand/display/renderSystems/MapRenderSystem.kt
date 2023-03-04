@@ -7,12 +7,9 @@ import com.stewsters.sand.game.map.World
 import kaiju.math.getEuclideanDistance
 import kaiju.math.lerp
 import kaiju.math.limit
-import org.codetome.zircon.api.Position
-import org.codetome.zircon.api.TextCharacter
-import org.codetome.zircon.api.builder.TextCharacterBuilder
-import org.codetome.zircon.api.color.TextColor
-import org.codetome.zircon.api.color.TextColorFactory
-import org.codetome.zircon.api.screen.Screen
+import org.hexworks.zircon.api.color.TileColor
+import org.hexworks.zircon.api.data.Position
+import org.hexworks.zircon.api.screen.Screen
 
 class MapRenderSystem {
 
@@ -22,8 +19,8 @@ class MapRenderSystem {
         val los = LosEvaluator(world)
         val playerPos = world.player.pos
 
-        val xSize = screen.getBoundableSize().columns
-        val ySize = screen.getBoundableSize().rows
+        val xSize = screen.width
+        val ySize = screen.height
         for (y in 0 until ySize) {
             for (x in 0 until xSize) {
 
@@ -33,13 +30,13 @@ class MapRenderSystem {
                 val dist = getEuclideanDistance(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ)
                 val lightLevel = world.getLight(worldX, worldY, worldZ)
                 if (
-                        playerPos.z >= world.getZSize() - 2 || //above the ground
-                        dist < 2 ||
-                        (lightLevel > 0 &&
-                                Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los))
+                    playerPos.z >= world.getZSize() - 2 || //above the ground
+                    dist < 2 ||
+                    (lightLevel > 0 &&
+                            Bresenham3d.open(playerPos.x, playerPos.y, playerPos.z, worldX, worldY, worldZ, los))
                 ) {
 
-                    var textCharacter: TextCharacter = Appearance.darkness
+                    var textCharacter = Appearance.darkness
                     var brightness = 1.0
                     for (down in 0 until 4) {
 
@@ -62,31 +59,34 @@ class MapRenderSystem {
                         }
                     }
 
-                    val tintedForeGround = darken(textCharacter.getForegroundColor(), Appearance.black, 0.0, brightness)
-                    val tintedBackGround = darken(textCharacter.getBackgroundColor(), Appearance.black, 0.0, brightness)
+                    // TODO use or remove?
+                    val tintedForeGround = darken(textCharacter.foregroundColor, Appearance.black, 0.0, brightness)
+                    val tintedBackGround = darken(textCharacter.backgroundColor, Appearance.black, 0.0, brightness)
 
-                    screen.setCharacterAt(Position.of(x, ySize - y - 1), TextCharacterBuilder.newBuilder()
-                            .character(textCharacter.getCharacter())
-                            .foregroundColor(tintedForeGround)
-                            .backgroundColor(tintedBackGround).build())
+                    screen.draw(
+                        textCharacter.createCopy()
+                            .withForegroundColor(tintedForeGround)
+                            .withBackgroundColor(tintedBackGround),
+                        Position.create(x, ySize - y - 1)
+                    )
                 } else {
-                    screen.setCharacterAt(Position.of(x, ySize - y - 1), Appearance.darkness)
+                    screen.draw(Appearance.darkness, Position.create(x, ySize - y - 1))
                 }
             }
         }
     }
 
     // This is not ideal, it creates a lot of garbage
-    private fun darken(textColor: TextColor, tintColor: TextColor, tint: Double, brightness: Double): TextColor {
+    private fun darken(textColor: TileColor, tintColor: TileColor, tint: Double, brightness: Double): TileColor {
 
-        val r = lerp(tint, textColor.getRed().toDouble(), tintColor.getRed().toDouble())
-        val g = lerp(tint, textColor.getGreen().toDouble(), tintColor.getGreen().toDouble())
-        val b = lerp(tint, textColor.getBlue().toDouble(), tintColor.getBlue().toDouble())
+        val r = lerp(tint, textColor.red.toDouble(), tintColor.red.toDouble())
+        val g = lerp(tint, textColor.green.toDouble(), tintColor.green.toDouble())
+        val b = lerp(tint, textColor.blue.toDouble(), tintColor.blue.toDouble())
 
-        return TextColorFactory.fromRGB(
-                (r * brightness).limit(0.0, 255.0).toInt(),
-                (g * brightness).limit(0.0, 255.0).toInt(),
-                (b * brightness).limit(0.0, 255.0).toInt()
+        return TileColor.create(
+            (r * brightness).limit(0.0, 255.0).toInt(),
+            (g * brightness).limit(0.0, 255.0).toInt(),
+            (b * brightness).limit(0.0, 255.0).toInt()
         )
     }
 

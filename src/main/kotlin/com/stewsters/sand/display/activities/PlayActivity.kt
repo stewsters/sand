@@ -13,9 +13,9 @@ import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.systems.LightSystem
 import com.stewsters.sand.game.systems.TurnProcessSystem
 import kaiju.math.Facing
-import org.codetome.zircon.api.builder.TerminalBuilder
-import org.codetome.zircon.api.input.KeyStroke
-import org.codetome.zircon.api.screen.Screen
+import org.hexworks.zircon.api.builder.screen.ScreenBuilder
+import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.KeyCode
 
 
 class PlayActivity(var game: SandGame, var world: World) : Activity {
@@ -36,26 +36,26 @@ class PlayActivity(var game: SandGame, var world: World) : Activity {
         mapRenderSystem = MapRenderSystem()
         hudRenderSystem = HudRenderSystem()
 
-        screen = TerminalBuilder.createScreenFor(game.terminal)
+        screen = ScreenBuilder.createScreenFor(game.tileGrid)
     }
 
 
-    override fun keyPressed(keycode: KeyStroke) {
+    override fun keyPressed(keycode: KeyCode) {
         // TODO: convert keycode into action, do that action
 
 
-        val action = when (keycode.getCharacter()) {
-            'w' -> WalkAction(Facing.NORTH)
-            'a' -> WalkAction(Facing.WEST)
-            's' -> WalkAction(Facing.SOUTH)
-            'd' -> WalkAction(Facing.EAST)
+        val action = when (keycode) {
+            KeyCode.KEY_W -> WalkAction(Facing.NORTH)
+            KeyCode.KEY_A -> WalkAction(Facing.WEST)
+            KeyCode.KEY_S -> WalkAction(Facing.SOUTH)
+            KeyCode.KEY_D -> WalkAction(Facing.EAST)
 
-            'e' -> ClimbAction()
-            'q' -> DescendAction()
+            KeyCode.KEY_E -> ClimbAction()
+            KeyCode.KEY_Q -> DescendAction()
 
-            't' -> LightTorchAction()
-            'g' -> DropTorchAction()
-            'r' -> AttachRopeAction()
+            KeyCode.KEY_T -> LightTorchAction()
+            KeyCode.KEY_G -> DropTorchAction()
+            KeyCode.KEY_R -> AttachRopeAction()
             else -> null
         }
 

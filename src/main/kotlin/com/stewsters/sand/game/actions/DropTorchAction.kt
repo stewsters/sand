@@ -3,7 +3,7 @@ package com.stewsters.sand.game.actions
 import com.stewsters.sand.game.map.World
 import com.stewsters.sand.game.pawn.LightProducer
 import com.stewsters.sand.game.pawn.Pawn
-import org.codetome.zircon.api.builder.TextCharacterBuilder
+import org.hexworks.zircon.api.data.Tile
 
 class DropTorchAction : Action() {
 
@@ -23,12 +23,14 @@ class DropTorchAction : Action() {
 
         inventory.torches--
 
-        world.addPawn(Pawn(
+        world.addPawn(
+            Pawn(
                 name = "torch",
                 pos = pawn.pos + pawn.facing!!,
-                appearance = TextCharacterBuilder.newBuilder().character('t').build(),
+                appearance = Tile.newBuilder().withCharacter('t').build(),
                 lightProducer = LightProducer(100, 8)
-        ))
+            )
+        )
 
         return ActionResult.SUCCESS
     }

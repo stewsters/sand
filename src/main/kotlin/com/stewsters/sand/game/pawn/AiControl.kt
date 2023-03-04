@@ -26,7 +26,7 @@ class DangerNoodleAi : AiControl {
             return AttackAction(pawn, world.player)
         }
 
-        val facing = Facing.values().toList().minBy { world.getLight(world.player.pos + it) }
+        val facing = Facing.values().toList().minByOrNull { world.getLight(world.player.pos + it) }
 
         return WalkAction(facing ?: Facing.EAST)
 

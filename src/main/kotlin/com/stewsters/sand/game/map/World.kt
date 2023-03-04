@@ -4,6 +4,7 @@ import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.pawn.Pawn
 import kaiju.math.Matrix3d
 import kaiju.math.Vec3
+import kaiju.math.matrix3dOf
 import java.util.*
 
 
@@ -21,8 +22,8 @@ class World(
 
     init {
 
-        light = Matrix3d(getXSize(), getYSize(), getZSize()) { x, y, z -> 0.0 }
-        lightUpdate = Matrix3d(getXSize(), getYSize(), getZSize()) { x, y, z -> 0 }
+        light = matrix3dOf(getXSize(), getYSize(), getZSize()) { x, y, z -> 0.0 }
+        lightUpdate = matrix3dOf(getXSize(), getYSize(), getZSize()) { x, y, z -> 0 }
 
         addPawn(player)
 
