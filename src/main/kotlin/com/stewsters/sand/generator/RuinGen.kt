@@ -5,11 +5,7 @@ import com.stewsters.sand.game.enums.TileType
 import com.stewsters.sand.game.map.Chunk
 import com.stewsters.sand.game.map.Tile
 import com.stewsters.sand.game.map.World
-import com.stewsters.sand.game.pawn.DangerNoodleAi
-import com.stewsters.sand.game.pawn.Health
-import com.stewsters.sand.game.pawn.Inventory
-import com.stewsters.sand.game.pawn.Pawn
-import com.stewsters.sand.game.pawn.TurnTaker
+import com.stewsters.sand.game.pawn.*
 import kaiju.math.Facing
 import kaiju.math.Matrix3d
 import kaiju.math.Vec3
@@ -36,9 +32,11 @@ object RuinGen {
 
         val worldMap = World(
             player = Pawn(
-                name = "Player",
+                name = "Lila",
                 pos = Vec3(maxSize.x / 2, maxSize.y / 2 - 10, groundHeight),
-                health = Health(100, 100),
+                health = Stat(100, 100),
+                breath = Stat(100, 100),
+                food = Stat(100, 100),
                 appearance = Appearance.player,
                 turnTaker = TurnTaker(gameTurn = 0),
                 inventory = Inventory(4, 6),
@@ -218,18 +216,16 @@ object RuinGen {
             }
         }
 
-//.forEachIndexed { index, vec3 ->
         worldMap.addPawn(
             Pawn(
-                "Danger Noodle",
-                worldMap.player.pos.plus(Facing.NORTH),
-                Appearance.nopeRope,
-                Health(1, 1),
-                TurnTaker((1).toLong()),
-                DangerNoodleAi()
+                name = "Danger Noodle",
+                pos = worldMap.player.pos.plus(Facing.NORTH),
+                appearance = Appearance.nopeRope,
+                health = Stat(1, 1),
+                turnTaker = TurnTaker((1).toLong()),
+                aiControl = DangerNoodleAi()
             )
         )
-        //      }
 
         val playerArea = worldMap.getCellTypeAt(worldMap.player.pos)
         assert(playerArea.floor)

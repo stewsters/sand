@@ -8,7 +8,7 @@ class AttackAction(pawn: Pawn, internal var target: Pawn) : Action() {
 
         val health = target.health
         if (health != null) {
-            health.damage(1)
+            health.decrease(1)
 
             if (health.cur <= 0) {
                 world.removePawn(target)

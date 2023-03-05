@@ -10,16 +10,27 @@ class HudRenderSystem {
 
 
     fun processSystem(gameMap: World, screen: Screen) {
+        var line = 0
+        drawLine( screen, line++, gameMap.player.name)
 
-        val playerHealth = gameMap.player.health
-        if (playerHealth != null)
-            drawLine(screen, 0, "HP: ${playerHealth.cur}")
+        val elevation = gameMap.player.pos.z
+        drawLine(screen, line++, "Depth ${ -(32 -elevation )* 5}")
 
-        val inv = gameMap.player.inventory
+        gameMap.player.health?.let { playerHealth->
+            drawLine(screen, line++, "HP: ${playerHealth.cur}")
+        }
 
-        if (inv != null) {
-            drawLine(screen, 1, "Torches: ${inv.torches}")
-            drawLine(screen, 2, "Rope: ${inv.ropes}")
+        gameMap.player.food?.let {foodHealth ->
+            drawLine(screen, line++, "Fd: ${foodHealth.cur}")
+        }
+
+        gameMap.player.breath?.let { playerBreath->
+            drawLine(screen, line++, "Br: ${playerBreath.cur}")
+        }
+
+        gameMap.player.inventory?.let { inv->
+            drawLine(screen, line++, "Torches: ${inv.torches}")
+            drawLine(screen, line++, "Rope: ${inv.ropes}")
         }
     }
 
