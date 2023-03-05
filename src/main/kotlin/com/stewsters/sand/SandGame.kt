@@ -2,7 +2,7 @@ package com.stewsters.sand
 
 import com.stewsters.sand.display.activities.Activity
 import com.stewsters.sand.display.activities.MenuActivity
-import org.hexworks.zircon.api.CP437TilesetResources.rexPaint16x16
+import org.hexworks.zircon.api.CP437TilesetResources.rexPaint20x20
 import org.hexworks.zircon.api.SwingApplications.startTileGrid
 import org.hexworks.zircon.api.application.AppConfig
 import org.hexworks.zircon.api.grid.TileGrid
@@ -41,14 +41,11 @@ fun main() {
 
     val tileGrid = startTileGrid(
         AppConfig.newBuilder() // The number of tiles horizontally, and vertically
-            .withTitle(GameInfo.gameName)
-            .withSize(
-                GameInfo.xSize,
-                GameInfo.ySize
+            .withTitle(GameInfo.gameName).withSize(
+                GameInfo.xSize, GameInfo.ySize
             ) // You can choose from a wide array of CP437, True Type or Graphical tilesets
             // that are built into Zircon
-            .withDefaultTileset(rexPaint16x16())
-            .build()
+            .withDefaultTileset(rexPaint20x20()).build()
     )
 
     val game = SandGame(tileGrid)

@@ -81,7 +81,7 @@ object RuinGen {
         val mapChunkList = File("chunks").listFiles()
             .filter { it.name.endsWith(".cnk") }
             .map { file ->
-                val (metadata, mapData) = file.readText().split('\n')
+                val (metadata, mapData) = file.readText().lines()
 
                 val dimensions = metadata.split(" ").map { it.toInt() }
                 val (xSize, ySize, zSize) = dimensions

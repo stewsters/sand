@@ -21,13 +21,13 @@ class MenuActivity(val game: SandGame) : Activity {
         // this will be 1x1 left and down from the top left
         // corner of the panel
         val header = HeaderBuilder.newBuilder()
-            .withPosition(Position.create(3, 0))
+            .withPosition(Position.create(3, 1))
             .withText(GameInfo.subText)
             .build()
 
         val play = ButtonBuilder.newBuilder()
             .withText("Play")
-            .withPosition(Position.create(0, 2).relativeToBottomOf(header))
+            .withPosition(Position.create(14, 6).relativeToBottomOf(header))
             .build()
 
         val edit = ButtonBuilder.newBuilder()
