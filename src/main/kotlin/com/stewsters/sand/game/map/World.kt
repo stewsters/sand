@@ -13,9 +13,9 @@ class World(
     val map: Matrix3d<Chunk>
 ) {
 
-    val light: Matrix3d<Double>
-    val lightUpdate: Matrix3d<Int>
-    var lightTurn: Int = 0
+    private val light: Matrix3d<Double>
+    private val lightUpdate: Matrix3d<Int>
+    private var lightTurn: Int = 0
 
     // for ones who can do something
     val pawnQueue = PriorityQueue<Pawn>()
